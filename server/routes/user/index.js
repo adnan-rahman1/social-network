@@ -6,9 +6,11 @@ const auth = require('../middleware/auth');
 const signUpController = require('../../controllers/user-controller/signup.controller');
 const signInController = require('../../controllers/user-controller/signin.controller');
 
+// VALIDATORS
+const { validationRule, validateResult } = require('../../validator/user/');
 
 // SIGN UP
-router.post('/signup', signUpController);
+router.post('/signup', validationRule, validateResult, signUpController);
 
 // SIGN IN
 router.post('/signin', signInController);
