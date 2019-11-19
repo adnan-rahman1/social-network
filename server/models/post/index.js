@@ -10,8 +10,13 @@ const postSchema = new Schema({
     },
     body: {
         type: String,
-        require: "Body is required",
+        required: "Body is required",
         minlength: 4,
+    },
+    postedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User"
     },
 });
 

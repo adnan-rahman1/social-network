@@ -12,8 +12,8 @@ const checkIfPassMatch = async (reqPassword, password) => {
 // End
 
 // Generate JSON WEB TOKEN
-const generateWebToken = async (id, firstName, lastName) => {
-    return await jwt.sign({ id,firstName, lastName }, process.env.JWT_PRIVATE_KEY ); // return jwt token
+const generateWebToken = async (id ) => {
+    return await jwt.sign({ id }, process.env.JWT_PRIVATE_KEY ); // return jwt token
 }
 // END
 
@@ -24,21 +24,20 @@ module.exports = async (req, res) => {
         });
         if (!isUserExist){
             res.send({
-                msg: "No user found",
+                msg: "Email and Password doesn't exist",
             });
         }
         else {
-            const { _id, firstName, lastName, password } = isUserExist;
+            const { _id, password } = isUserExist;
             if (!await checkIfPassMatch(req.body.password, password)) { // Check if the password match
                 res.send({
-                    msg: "Password Doesn't Matched",
+                    msg: "Email and Password doesn't exist",
                 });
             }
             else {
-                const token = await generateWebToken(_id, firstName, lastName); // Generate JSON WEB TOKEN
+                const token = await generateWebToken(_id); // Generate JSON WEB TOKEN
                 res.send({
-                    firstName,
-                    lastName,
+                    _id,
                     token,
                     msg: "You signed in successfully"
                 });

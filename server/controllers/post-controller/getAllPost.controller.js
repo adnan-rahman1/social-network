@@ -1,24 +1,23 @@
 const Post = require('../../models/post');
-const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
-dotenv.config();
+const User = require('../../models/user/User');
 
+
+const getAllPostWithUserName = async (post) => {
+    try {
+        return await post.populate("postedBy", "firstName lastName email").execPopulate();
+    } catch (err) {
+        return err;
+    }
+}
 module.exports = async (req, res) => {
     try {
-        let posts = await Post.find();
-        const token = req.headers['authorization'];
-        if (token) {
-            const {firstName, lastName } = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
-            res.send({
-                posts,
-            });
+        const posts = (await Post.find()).map(getAllPostWithUserName);
+        if (posts.length <= 0) {
+            res.send("No post awailable");
         }
-        res.send({
-            posts
-        });
-        
-        
+        const allPostByUserName = await Promise.all(posts);
+        res.send(allPostByUserName);
     } catch (err) {
-        res.send(err);
+        res.send(err.message);
     }
 }

@@ -2,10 +2,8 @@ const Post = require('../../models/post');
 
 module.exports = async (req, res) => {
     try {
-        req.body.postedBy = req.auth.id;
-        const newPost = await new Post(req.body);
-        await newPost.save();
-        res.send(newPost);
+        const post = await Post.findById(req.params.id);
+        res.send(post);
     } catch (err) {
         res.send(err.message);
     }

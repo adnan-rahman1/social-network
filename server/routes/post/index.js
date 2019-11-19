@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const auth = require('../middleware/auth');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -7,20 +6,25 @@ dotenv.config();
 
 // CONTROLLERS
 const createPostController = require('../../controllers/post-controller/createPost.controller');
-const getAllPostController = require('../../controllers/post-controller/getAllPost.controller');
-const updateTodoController = require('../../controllers/todo-controller/updateTodo.controller');
-const deleteSingleTodoController = require('../../controllers/todo-controller/deleteTodo.controller');
+const getAllPostController = require("../../controllers/post-controller/getAllPost.controller");
+const getSinglePostController = require("../../controllers/post-controller/getSignlePost.controller");
+const updatePostController = require('../../controllers/post-controller/updatePost.controller');
+const deleteSinglePostController = require('../../controllers/post-controller/deletePost.controller');
 
 
 // VALIDATORS
 const { validationRule, validateResult } = require('../../validator/post/');
 
+// Authorized Route
+const auth = require('../middleware/auth');
 
-// CREATE TODO
-router.post('/create', validationRule, validateResult, createPostController);
+
+// CREATE Post
+router.post('/create', auth, validationRule, validateResult, createPostController);
 router.get("/", getAllPostController);
-router.delete("/:id", deleteSingleTodoController);
-router.put("/:id", updateTodoController);
+router.get("/:id", getSinglePostController);
+router.delete("/:id", auth, deleteSinglePostController);
+router.put("/:id", auth, validationRule, validateResult, updatePostController);
 
 
 module.exports = router;
