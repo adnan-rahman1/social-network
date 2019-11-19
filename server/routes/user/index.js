@@ -16,7 +16,7 @@ router.post('/signup', validationRule, validateResult, signUpController);
 router.post('/signin', signInController);
 
 // SIGN OUT 
-   router.post('/signout', (req, res) => {
+router.post('/signout', (req, res) => {
     res.send('<h1>User logout successfully</h1>');
 });
 
