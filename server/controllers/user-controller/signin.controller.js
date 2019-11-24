@@ -6,14 +6,14 @@ dotenv.config()
 const User = require('../../models/user/User');
 
 // Compare Password with Request Password
-const checkIfPassMatch = async (reqPassword, password) => {
-    return await bcryptjs.compare(reqPassword, password); // return true if password matched
+const checkIfPassMatch = (reqPassword, password) => {
+    return bcryptjs.compare(reqPassword, password); // return true if password matched
 }
 // End
 
 // Generate JSON WEB TOKEN
-const generateWebToken = async (id ) => {
-    return await jwt.sign({ id }, process.env.JWT_PRIVATE_KEY ); // return jwt token
+const generateWebToken = (id ) => {
+    return jwt.sign({ id }, process.env.JWT_PRIVATE_KEY ); // return jwt token
 }
 // END
 
@@ -24,14 +24,15 @@ module.exports = async (req, res) => {
         });
         if (!isUserExist){
             res.send({
-                msg: "Email and Password doesn't exist",
+                msg: "Email and Password doesn't exist 1",
             });
         }
         else {
             const { _id, password } = isUserExist;
-            if (!await checkIfPassMatch(req.body.password, password)) { // Check if the password match
+            const isPasswordMatched = await checkIfPassMatch(req.body.password, password);
+            if (!isPasswordMatched) { // Check if the password match
                 res.send({
-                    msg: "Email and Password doesn't exist",
+                    msg: "Email and Password doesn't exist 2",
                 });
             }
             else {
