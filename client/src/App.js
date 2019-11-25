@@ -1,23 +1,11 @@
 import React from 'react';
-import axios from 'axios';
+import Router from './components/router';
 
 
-class App extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>Hello World</h1>
-      </div> 
-    );
-  }
-}
+const App = (props) => (
+  <div>
+    <Router />
+  </div>
+)
 
 export default App;
