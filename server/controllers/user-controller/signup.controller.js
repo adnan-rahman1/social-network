@@ -28,7 +28,9 @@ module.exports = async (req, res) => {
             req.body.password = await generateHashPassWord(req.body.password);
             // End 
 
-            let newUser = { ...req.body };
+            const [ firstName, lastName ] = req.body.name.split(" ");
+            const { email, password } = req.body;
+            let newUser = { firstName, lastName, email, password };
             let createUser = await new User(newUser);
             await createUser.save();
             res.status(200).send({

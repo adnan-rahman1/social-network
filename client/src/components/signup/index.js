@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBInput } from 'mdbreact';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 class SignUp extends Component {
@@ -19,18 +20,13 @@ class SignUp extends Component {
 
   onSubmitForm = async (e) => {
     e.preventDefault();
-    const { email, password } = this.state
-    const [ firstName, lastName ] = this.state.name.split(" ");
     try {
-      const res = await axios.post("http://localhost:5000/user/signup", {
-        firstName,
-        lastName,
-        email,
-        password
-      });
+      const res = await axios.post("http://localhost:5000/user/signup", { ...this.state });
       this.setState({ msg: res.data.msg });
+      toast.success(this.state.msg, { autoClose: 2000 });
     } catch (err) {
       this.setState({ msg: err.response.data.msg });
+      toast.warn(this.state.msg, { autoClose: 2000 });
     }
     this.setState({ 
         name: "",
@@ -43,9 +39,10 @@ class SignUp extends Component {
     let { name, email, password } = this.state;
     return (
       <MDBContainer className="mt-5">
+        <ToastContainer />
         <MDBRow center>
           <MDBCol md="6">
-            <form id="form" onSubmit={this.onSubmitForm}>
+            <form onSubmit={this.onSubmitForm}>
               <p className="h5 text-center mb-4">Sign up</p>
               <div className="grey-text">
                 <MDBInput
@@ -56,7 +53,6 @@ class SignUp extends Component {
                   type="text"
                   onChange={this.inputHandleChange}
                   value={name}
-                  required
                 />
                 <MDBInput
                   name="email"
@@ -66,7 +62,6 @@ class SignUp extends Component {
                   type="email"
                   onChange={this.inputHandleChange}
                   value={email}
-                  required
                 />
                 <MDBInput
                   name="password"
@@ -76,7 +71,6 @@ class SignUp extends Component {
                   type="password"
                   onChange={this.inputHandleChange}
                   value={password}
-                  required
                 />
               </div>
               <div className="text-center">
