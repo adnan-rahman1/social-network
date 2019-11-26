@@ -5,13 +5,19 @@ const app = express();
 const userRoute = require('./routes/user');
 const postRoute = require('./routes/post');
 
+
+const corsOptions = {
+  origin: 'http://localhost:3000',
+}
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(morgan('dev'));
+
+
 // Mongodb
 require('./db');
 
-app.use(cors());
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 
 app.use('/user', userRoute);
 app.use('/post', postRoute);

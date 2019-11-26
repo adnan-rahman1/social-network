@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
             email: req.body.email
         });
         if (isUserExist)
-            res.send({
+            res.status(403).send({
                 msg: "User already exists",
                 redirect: false
             });
@@ -31,16 +31,15 @@ module.exports = async (req, res) => {
             let newUser = { ...req.body };
             let createUser = await new User(newUser);
             await createUser.save();
-            res.send({
+            res.status(200).send({
                 firstName: newUser.firstName,
                 lastName: newUser.lastName,
                 email: newUser.email,
                 msg: "You successfully registered",
-                redirect: true
             });
         }
         
     } catch (err) {
-        res.send(err);
+        res.status(403).json(err);
     }
 }

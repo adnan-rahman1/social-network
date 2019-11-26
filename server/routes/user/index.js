@@ -10,12 +10,11 @@ const signInController = require('../../controllers/user-controller/signin.contr
 const profilePictureController = require('../../controllers/user-controller/profilePictureController')
 
 // VALIDATORS
-const { validationRule, validateResult } = require('../../validator/user/');
+const validation = require('../../validator/user/');
 
 // SIGN UP
 router.post('/signup', 
-    validationRule, 
-    validateResult, 
+    validation, 
     signUpController,
 );
 
