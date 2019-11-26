@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBInput } from 'mdbreact';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
+toast.configure()
 
 class SignUp extends Component {
   
@@ -23,10 +24,10 @@ class SignUp extends Component {
     try {
       const res = await axios.post("http://localhost:5000/user/signup", { ...this.state });
       this.setState({ msg: res.data.msg });
-      toast.success(this.state.msg, { autoClose: 2000 });
+      toast.success(this.state.msg, { autoClose: 2000, position: "bottom-right" });
     } catch (err) {
       this.setState({ msg: err.response.data.msg });
-      toast.warn(this.state.msg, { autoClose: 2000 });
+      toast.warn(this.state.msg, { autoClose: 2000, position: "bottom-right" });
     }
     this.setState({ 
         name: "",
@@ -39,9 +40,8 @@ class SignUp extends Component {
     let { name, email, password } = this.state;
     return (
       <MDBContainer className="mt-5">
-        <ToastContainer />
         <MDBRow center>
-          <MDBCol md="6">
+          <MDBCol md="4">
             <form onSubmit={this.onSubmitForm}>
               <p className="h5 text-center mb-4">Sign up</p>
               <div className="grey-text">
@@ -74,7 +74,7 @@ class SignUp extends Component {
                 />
               </div>
               <div className="text-center">
-                <MDBBtn type="submit" onClick={this.formControl} color="primary">Register</MDBBtn>
+                <MDBBtn type="submit" onClick={this.formControl} gradient="blue">Register</MDBBtn>
               </div>
             </form>
           </MDBCol>

@@ -2,15 +2,17 @@ const { check, validationResult } = require('express-validator');
 
 module.exports = async (req, res, next) => {
     try {
-        await check('name')
-            .not()
-            .isEmpty()
-            .withMessage("Name is required")
-            .isLength({
-                min: 2,
-                max: 20,
-            })
-            .withMessage("Name must be minimum two character long").run(req);
+        if (req.body.name === "") {
+            await check('name')
+                .not()
+                .isEmpty()
+                .withMessage("Name is required")
+                .isLength({
+                    min: 3,
+                    max: 20,
+                })
+                .withMessage("Name must be minimum two character long").run(req);
+        }
         await check("email")
             .not()
             .isEmpty()

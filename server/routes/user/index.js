@@ -19,7 +19,7 @@ router.post('/signup',
 );
 
 // SIGN IN
-router.post('/signin', profilePictureController, signInController);
+router.post('/signin', validation, profilePictureController, signInController);
 
 // SIGN OUT 
 router.post('/signout', (req, res) => {
