@@ -23,24 +23,24 @@ module.exports = async (req, res) => {
             email: req.body.email
         });
         if (!isUserExist){
-            res.send({
-                msg: "Email and Password doesn't exist 1",
+            res.status(403).send({
+                msg: "Email and Password doesn't exist",
             });
         }
         else {
             const { _id, password } = isUserExist;
             const isPasswordMatched = await checkIfPassMatch(req.body.password, password);
             if (!isPasswordMatched) { // Check if the password match
-                res.send({
-                    msg: "Email and Password doesn't exist 2",
+                res.status(403).send({
+                    msg: "Email and Password doesn't exist",
                 });
             }
             else {
                 const token = await generateWebToken(_id); // Generate JSON WEB TOKEN
-                res.send({
+                res.status(200).send({
                     _id,
                     token,
-                    msg: "You signed in successfully"
+                    msg: "You signed in successfully",
                 });
             }
         }

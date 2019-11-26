@@ -5,7 +5,7 @@ MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggle
 
 class NavBar extends Component {
   state = {
-    site_name: "{< AR >}",
+    site_name: "<{ AR }>",
     isOpen: false
   };
   
@@ -22,14 +22,14 @@ class NavBar extends Component {
           <MDBNavbarToggler onClick={this.toggleCollapse} />
           <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
             <MDBNavbarNav left>
-              <MDBNavItem className="mt-2">
+              <MDBNavItem>
                 <MDBNavLink to="/">Home</MDBNavLink>
               </MDBNavItem>
-              <MDBNavItem className="mt-2">
+              <MDBNavItem>
                 <MDBNavLink to="/signin">Sign In</MDBNavLink>
               </MDBNavItem>
               <MDBNavItem>
-                <MDBNavLink to="/signup"><MDBBtn size="sm" gradient="blue">Register</MDBBtn></MDBNavLink>
+                <MDBNavLink to="/signup">Register</MDBNavLink>
               </MDBNavItem>
             </MDBNavbarNav>
           </MDBCollapse>
