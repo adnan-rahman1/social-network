@@ -8,7 +8,7 @@ module.exports = async (req, res, next) => {
         res.send(err.message);
       }
       // console.log(req.upload);
-      console.log(req.file)
+      // console.log(req.file)
       next();
       // Everything went fine.
     });

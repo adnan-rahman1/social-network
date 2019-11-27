@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
+const authRoute = require("./routes/authenticate");
 const userRoute = require('./routes/user');
 const postRoute = require('./routes/post');
 
@@ -18,7 +19,7 @@ app.use(morgan('dev'));
 // Mongodb
 require('./db');
 
-
+app.use("/auth", authRoute);
 app.use('/user', userRoute);
 app.use('/post', postRoute);
 

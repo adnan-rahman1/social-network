@@ -6,7 +6,9 @@ module.exports = (req, res, next) => {
     try {
         let token = req.headers['authorization'];
         if (!token) {
-            res.status(500).send("Unauthorized user");
+            res.status(500).send({
+                msg: "Unauthorized user"
+            });
         }
         else {
             token = token.split(' ')[1];
@@ -15,6 +17,8 @@ module.exports = (req, res, next) => {
             next();
         }
     } catch (err) {
-        res.status(500).send("Dont' be oversmart");
+        res.status(500).send({
+            msg: "Dont' be oversmart"
+        });
     }
 }

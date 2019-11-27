@@ -3,10 +3,10 @@ import { Redirect } from 'react-router-dom';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBInput } from 'mdbreact';
 import axios from 'axios';
 
-import { toast } from 'react-toastify';
 import { css } from '@emotion/core';
 import BarLoader from 'react-spinners/BarLoader';
 
+import { toast } from 'react-toastify';
 toast.configure()
 const override = css`
     display: block;
@@ -26,6 +26,10 @@ class SignIn extends Component {
     };
   }
 
+  componentDidMount() {
+    console.log("Calling the api from singin...");
+  }
+
   inputHandleChange = e => this.setState({ [e.target.name]: e.target.value });
 
   resetFormField() {
@@ -35,17 +39,17 @@ class SignIn extends Component {
       loading: false,
     });
   }
-
+  
   onSubmitForm = async (e) => {
     e.preventDefault();
     try {
       this.setState({ loading: true });
       const res = await axios.post("http://localhost:5000/user/signin", { ...this.state });
-      
       if (res.status === 200) {
         localStorage.setItem("token", res.data.token);
         toast.success(res.data.msg, { autoClose: 2000, position: "bottom-right" });
-        this.setState({ redirect: true })
+        this.setState({ redirect: true})
+        this.props.isSignedIn();
       }
     } catch (err) {
       toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });
@@ -95,7 +99,7 @@ class SignIn extends Component {
                 />
               </div>
               <div className="text-center">
-                <MDBBtn type="submit" onClick={this.formControl} gradient="blue">Sign in</MDBBtn>
+                <MDBBtn type="submit" gradient="blue">Sign in</MDBBtn>
               </div>
             </form>
           </MDBCol>

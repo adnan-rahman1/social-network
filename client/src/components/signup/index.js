@@ -27,6 +27,10 @@ class SignUp extends Component {
     };
   }
 
+  componentDidMount() {
+    console.log("Calling the api from signup...");
+  }
+
   inputHandleChange = e => this.setState({ [e.target.name]: e.target.value });
 
   resetFormField() {

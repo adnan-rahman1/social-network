@@ -22,8 +22,10 @@ router.post('/signup',
 router.post('/signin', validation, profilePictureController, signInController);
 
 // SIGN OUT 
-router.post('/signout', (req, res) => {
-    res.send('<h1>User logout successfully</h1>');
+router.get('/signout', (req, res) => {
+    res.status(200).send({
+        msg: "You successfully signout"
+    });
 });
 
 
