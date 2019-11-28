@@ -19,7 +19,7 @@ app.use(morgan('dev'));
 // Mongodb
 require('./db');
 
-app.use("/auth", authRoute);
+app.use("/admin", authRoute);
 app.use('/user', userRoute);
 app.use('/post', postRoute);
 

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
 import {
-MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse
+  MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse,
+  MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem
 } from "mdbreact";
-
-import axios from 'axios';
-
+  
 import { toast } from 'react-toastify';
 toast.configure()
+
 
 
 class NavBar extends Component {
@@ -29,21 +29,13 @@ class NavBar extends Component {
   }
 
   componentDidMount = async () => {
+    // when the app start this function will call first
     console.log("Calling from the navbar js...");
-    const token = localStorage.getItem('token');
-
-    try {
-      const res = await axios.post("http://localhost:5000/auth", {
-      }, { headers: {"Authorization" : `Bearer ${token}` }});
-      toast.success(res.data.msg, { autoClose: 2000, position: "bottom-right" });
-      this.props.isSignedIn();
-    } catch (err) {
-        toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });
-    }
   }
   
   render() {
     const { pathname } = this.props.location;
+    const { firstName, lastName } = this.props.user;
 
     return (
         <MDBNavbar color="blue-gradient" dark expand="md">
@@ -57,17 +49,30 @@ class NavBar extends Component {
                 <MDBNavLink to="/">Home</MDBNavLink>
               </MDBNavItem>
               { 
-                this.props.isAuthenticated ? 
+                this.props.authenticate ? 
                 <MDBNavItem>
-                  <MDBNavLink to="/signout">Sign out</MDBNavLink>
-                </MDBNavItem> :
+                  <MDBDropdown>
+                    <MDBDropdownToggle nav caret>
+                      { `${firstName} ${lastName}` }
+                    </MDBDropdownToggle>
+                    <MDBDropdownMenu>
+                      <MDBDropdownItem>
+                        <MDBNavLink className="blue-text" to="/profile">Your profile</MDBNavLink>
+                      </MDBDropdownItem>
+                      <MDBDropdownItem>
+                        <MDBNavLink className='blue-text' to="/signout">Sign Out</MDBNavLink>
+                      </MDBDropdownItem>
+                    </MDBDropdownMenu>
+                  </MDBDropdown>
+                </MDBNavItem>
+                  :
                 <React.Fragment>
-                <MDBNavItem active={ pathname === "/signin" && "active" }>
-                  <MDBNavLink to="/signin">Sign In</MDBNavLink>
-                </MDBNavItem>
-                <MDBNavItem active={ pathname === "/signup" && "active" }>
-                  <MDBNavLink to="/signup">Register</MDBNavLink>
-                </MDBNavItem>
+                  <MDBNavItem active={ pathname === "/signin" && "active" }>
+                    <MDBNavLink to="/signin">Sign In</MDBNavLink>
+                  </MDBNavItem>
+                  <MDBNavItem active={ pathname === "/signup" && "active" }>
+                    <MDBNavLink to="/signup">Register</MDBNavLink>
+                  </MDBNavItem>
                 </React.Fragment>
               }
             </MDBNavbarNav>

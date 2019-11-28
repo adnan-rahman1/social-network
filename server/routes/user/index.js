@@ -7,6 +7,7 @@ const signUpController = require('../../controllers/user-controller/signup.contr
 const signInController = require('../../controllers/user-controller/signin.controller');
 
 // Upload User Profile Picture Controller
+const profileController = require('../../controllers/user-controller/profile.controller');
 const profilePictureController = require('../../controllers/user-controller/profilePictureController')
 
 // VALIDATORS
@@ -30,9 +31,7 @@ router.get('/signout', (req, res) => {
 
 
 // USER PROFILE
-router.get('/profile', (req, res) => {
-    res.send('<h1>Welcome to user profile</h1>');
-});
+router.get('/:id', profileController);
 
 
 module.exports = router;

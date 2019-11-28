@@ -30,7 +30,7 @@ class SignOut extends Component {
         toast.success(res.data.msg, { autoClose: 2000, position: "bottom-right" });
         this.setState({ redirect: true, loading: false })
     }
-    this.props.isSignedOut();
+    this.props.isAuthenticate("", false);
   }
 
   isLoading () {

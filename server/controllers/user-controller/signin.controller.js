@@ -12,7 +12,7 @@ const checkIfPassMatch = (reqPassword, password) => {
 // End
 
 // Generate JSON WEB TOKEN
-const generateWebToken = (id ) => {
+const generateWebToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_PRIVATE_KEY ); // return jwt token
 }
 // END
@@ -28,7 +28,8 @@ module.exports = async (req, res) => {
             });
         }
         else {
-            const { _id, password } = isUserExist;
+            const { _id, firstName, lastName, email, password } = isUserExist;
+            const user = { id: _id, firstName, lastName, email };
             const isPasswordMatched = await checkIfPassMatch(req.body.password, password);
             if (!isPasswordMatched) { // Check if the password match
                 res.status(403).send({
@@ -37,8 +38,9 @@ module.exports = async (req, res) => {
             }
             else {
                 const token = await generateWebToken(_id); // Generate JSON WEB TOKEN
+
                 res.status(200).send({
-                    _id,
+                    user,
                     token,
                     msg: "You signed in successfully",
                 });
