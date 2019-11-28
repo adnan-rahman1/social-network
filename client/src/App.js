@@ -1,7 +1,6 @@
 import React from 'react';
 import Router from './components/router';
 import isAuthenticated from "./r_components/user/auth.controller.";
-import userProfile from "./r_components/user/profile.controller";
 
 class App extends React.Component {
   
@@ -13,20 +12,20 @@ class App extends React.Component {
     }
   }
 
-  isAuthenticate = (user, authenticate) => {
-    this.setState({ user, authenticate })
+  setUser = (user) => {
+    this.setState({ user });
+  }
+
+  isAuthenticate = (authenticate) => {
+    this.setState({ authenticate })
   }
 
   componentDidMount = async () => {
     console.log("Calling from the app js...");
     const data = await isAuthenticated();
-    this.setState({
-      user: data.user,
-      authenticate: data.admin,
-    })
-    // const userProfileInfo = await userProfile(authUser.id);
-    // this.setState({ user: userProfileInfo });
-    // console.log(userProfileInfo);
+    this.isAuthenticate(data.admin);
+    this.setUser(data.user);
+
   }
 
   render() {
@@ -35,6 +34,7 @@ class App extends React.Component {
         <Router
           {...this.state}
           isAuthenticate={this.isAuthenticate}
+          setUser={this.setUser}
         />
       </div>
     )

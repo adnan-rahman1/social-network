@@ -19,18 +19,17 @@ const generateWebToken = (id) => {
 
 module.exports = async (req, res) => {
     try {
-        const isUserExist = await User.findOne({
+        const user = await User.findOne({
             email: req.body.email
         });
-        if (!isUserExist){
+        if (!user){
             res.status(403).send({
                 msg: "Email and Password doesn't exist",
             });
         }
         else {
-            const { _id, firstName, lastName, email, password } = isUserExist;
-            const user = { id: _id, firstName, lastName, email };
-            const isPasswordMatched = await checkIfPassMatch(req.body.password, password);
+            const { _id, firstName, lastName, email, createdAt } = user;
+            const isPasswordMatched = await checkIfPassMatch(req.body.password, user.password);
             if (!isPasswordMatched) { // Check if the password match
                 res.status(403).send({
                     msg: "Email and Password doesn't exist",
@@ -40,7 +39,9 @@ module.exports = async (req, res) => {
                 const token = await generateWebToken(_id); // Generate JSON WEB TOKEN
 
                 res.status(200).send({
-                    user,
+                    user: {
+                        _id, firstName, lastName, email, createdAt
+                    },
                     token,
                     msg: "You signed in successfully",
                 });

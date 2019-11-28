@@ -49,7 +49,8 @@ class SignIn extends Component {
         localStorage.setItem("token", res.data.token);
         toast.success(res.data.msg, { autoClose: 2000, position: "bottom-right" });
         this.setState({ redirect: true})
-        this.props.isAuthenticate(res.data.user, true);
+        this.props.isAuthenticate(true);
+        this.props.setUser(res.data.user);
       }
     } catch (err) {
       toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });

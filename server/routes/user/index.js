@@ -9,6 +9,7 @@ const signInController = require('../../controllers/user-controller/signin.contr
 // Upload User Profile Picture Controller
 const profileController = require('../../controllers/user-controller/profile.controller');
 const profilePictureController = require('../../controllers/user-controller/profilePictureController')
+const updateUserInfoController = require('../../controllers/user-controller/updateUserInfo.controller');
 
 // VALIDATORS
 const validation = require('../../validator/user/');
@@ -32,6 +33,7 @@ router.get('/signout', (req, res) => {
 
 // USER PROFILE
 router.get('/:id', profileController);
+router.put("/:id", auth, updateUserInfoController)
 
 
 module.exports = router;
