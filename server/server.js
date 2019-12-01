@@ -10,10 +10,10 @@ const postRoute = require('./routes/post');
 const corsOptions = {
   origin: 'http://localhost:3000',
 }
-app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
+app.use(cors());
 
 
 // Mongodb

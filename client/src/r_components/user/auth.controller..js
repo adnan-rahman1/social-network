@@ -6,8 +6,11 @@ const isAuthenticated = async () => {
   const token = localStorage.getItem('token');
 
   try {
-    const res = await axios.post("http://localhost:5000/admin", {
-    }, { headers: {"Authorization" : `Bearer ${token}` }});
+    const res = await axios({
+      method: "GET",
+      url: "http://localhost:5000/admin",
+      headers: { 'Authorization' : `Bearer ${token}` } 
+    });
     if (res.status === 200) {
       toast.success(res.data.msg, { autoClose: 2000, position: "bottom-right" });
       return res.data;

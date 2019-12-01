@@ -7,6 +7,9 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 
 
+import { createStore } from "redux";
+
+
 import App from './App';
 
 ReactDOM.render(<App />, document.getElementById('root'));
