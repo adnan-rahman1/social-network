@@ -1,8 +1,6 @@
 import React from 'react';
 import Router from './components/router';
 import isAuthenticated from "./r_components/user/auth.controller.";
-import { createStore } from 'redux'
-import { userReducer } from "./redux/reducers";
 import { authUser } from "./redux/actions";
 
 
@@ -14,8 +12,6 @@ class App extends React.Component {
       authenticate: false,
       user: {},
     }
-    const store = createStore(userReducer);
-    this.userLoggedInOrNot(store);
     
   }
   
@@ -27,13 +23,12 @@ class App extends React.Component {
     this.setState({ authenticate })
   }
   
-  userLoggedInOrNot = async (store) => {
+  userLoggedInOrNot = async () => {
     console.log("Calling from the app js...");
     const data = await isAuthenticated();
     const user = authUser(data.user);
-    store.dispatch(user);
-    // this.isAuthenticate(data.admin);
-    // this.setUser(data.user);
+    this.isAuthenticate(data.admin);
+    this.setUser(data.user);
     
   }
 

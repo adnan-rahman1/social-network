@@ -1,21 +1,7 @@
-const initialState = {
-  isAuthenticated: false,
-  user: {}
-}
+import { combineReducers } from 'redux';
+import isAuthenticated from "./user";
 
-export const userReducer = (state=initialState, action) => {
-    switch(action.type){
-        case "IS_AUTHENTICATED":
-            state = {
-                ...state,
-                isAuthenticated: true,
-                user: action.payload
-            }
-            console.log(state);
-            return state;
-        default:
-            state = initialState
-            console.log(state);
-            return state;
-    }
+const reducers = {
+    isAuthenticated,
 }
+export default combineReducers(reducers);
