@@ -1,7 +1,6 @@
 import React from 'react';
 import Router from './components/router';
 import isAuthenticated from "./r_components/user/auth.controller.";
-import { authUser } from "./redux/actions";
 
 
 class App extends React.Component {
@@ -12,7 +11,6 @@ class App extends React.Component {
       authenticate: false,
       user: {},
     }
-    
   }
   
   setUser = (user) => {
@@ -26,10 +24,8 @@ class App extends React.Component {
   userLoggedInOrNot = async () => {
     console.log("Calling from the app js...");
     const data = await isAuthenticated();
-    const user = authUser(data.user);
     this.isAuthenticate(data.admin);
     this.setUser(data.user);
-    
   }
 
   render() {

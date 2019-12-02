@@ -1,3 +1,4 @@
-export function authUser(payload) {
-  return { type: "IS_AUTHENTICATED", payload  }
-}
+export const USER_REGISTRATION = "USER_REGISTRATION";
+export const NOTIFICATION = "NOTIFICATION";
+export const LOADING = "LOADING";
+export const REDIRECT = "REDIRECT";

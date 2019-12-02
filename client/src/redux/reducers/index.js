@@ -1,7 +1,11 @@
 import { combineReducers } from 'redux';
-import isAuthenticated from "./user";
+import { r_registerUser } from "./user";
+import { r_notification } from "./notification";
+import { r_loading } from "./loading";
 
 const reducers = {
-    isAuthenticated,
+    r_registerUser,
+    r_notification,
+    r_loading,
 }
 export default combineReducers(reducers);

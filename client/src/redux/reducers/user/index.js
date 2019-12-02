@@ -1,13 +1,16 @@
+import { USER_REGISTRATION } from "../../actions";
+
 const initialState = {
   isAuthenticated: false,
   user: {},
 };
 
-export default (state = initialState, action) => {
+export const r_registerUser = (state = initialState, action) => {
   switch(action.type) {
-    case action.type:
+    case USER_REGISTRATION:
       state = {
         ...state,
+        user: action.payload,
       }
       break;
     default:
