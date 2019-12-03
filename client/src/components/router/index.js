@@ -8,16 +8,15 @@ import SignOut from "../signout";
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 const Router = (props) => {
-  const { isAuthenticate, setUser, user } = props;
   return (
     <BrowserRouter>
-      <NavBar {...props} />
+      <NavBar/>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/profile" component={() => <Profile user={user} setUser={setUser} />} />
+        <Route path="/profile" component={Profile} />
         <Route path="/signup" component={SignUp} />
-        <Route path="/signin" component={() => <SignIn isAuthenticate={isAuthenticate} setUser={setUser} />} />
-        <Route path="/signout" component={() => <SignOut isAuthenticate={isAuthenticate} setUser={setUser} />} />
+        <Route path="/signin" component={SignIn} />} />
+        <Route path="/signout" component={SignOut} />
       </Switch>
     </BrowserRouter>
   )

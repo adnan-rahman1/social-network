@@ -1,19 +1,51 @@
-import { USER_REGISTRATION } from "../../actions";
-import { ac_notification } from "../notification";
+import { USER_SIGNIN_SIGNUP, LOADING, IS_AUTHENTICATED, AUTH_USER } from "../../actions";
+import { ac_boolean } from "../boolean";
 import axios from 'axios';
 
-export const ac_registerUser =  (formData) => async (dispatch) => {
-  try {
-    const res = await axios.post("http://localhost:5000/user/signup", { ...formData });
-    // toast.success(res.data.msg, { autoClose: 2000, position: "bottom-right" });
-    console.log("calling after api");
-    dispatch({
-        type: USER_REGISTRATION,
-        payload: res.data
-    })
-    dispatch(ac_notification("You are successfully registered. Please sign in..."));
+import { toast } from 'react-toastify';
+toast.configure();
 
+export const ac_userAuthentication =  () => async (dispatch) => {
+  try {
+    dispatch(ac_boolean(LOADING, true))
+    const token = localStorage.getItem('token');
+    const res = await axios({
+      method: "GET",
+      url: "http://localhost:5000/admin",
+      headers: { 'Authorization' : `Bearer ${token}` } 
+    });
+    if (res.status === 200) {
+      toast.success(res.data.msg, { autoClose: 2000, position: "bottom-right" });
+      dispatch({
+        type: AUTH_USER,
+        payload: res.data.user,
+      });
+      dispatch(ac_boolean(LOADING, false));
+      dispatch(ac_boolean(IS_AUTHENTICATED, true));
+    }
   } catch (err) {
-    dispatch(ac_notification(err.response.data.msg));
+    dispatch(ac_boolean(LOADING, false));
+    // toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });
+  }
+}
+
+
+export const ac_userSignInSignOut =  (formData, urlSubStr) => async (dispatch) => {
+  try {
+    dispatch(ac_boolean(LOADING, true));
+    const res = await axios.post(`http://localhost:5000/user/${urlSubStr}`, { ...formData });
+    if (res.status === 200) {
+      toast.success("You are successfully registered...", { autoClose: 2000, position: "bottom-right" });
+      localStorage.setItem("token", res.data.token);
+      dispatch({
+        type: USER_SIGNIN_SIGNUP,
+        payload: res.data.user,
+      });
+      dispatch(ac_boolean(LOADING, false));
+      dispatch(ac_boolean(IS_AUTHENTICATED, true));
+    }
+  } catch (err) {
+    toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });
+    dispatch(ac_boolean(LOADING, false));
   }
 }

@@ -14,26 +14,37 @@ const updateUserInfoController = require('../../controllers/user-controller/upda
 // VALIDATORS
 const validation = require('../../validator/user/');
 
+// Middleware
+const isUserExist = require("../middleware/isUserExist");
+const isPasswordMatched = require("../middleware/isPasswordMatched");
+
 // SIGN UP
 router.post('/signup', 
-    validation, 
-    signUpController,
+	validation,
+	signUpController,
+	isUserExist,
+	signInController,
 );
 
 // SIGN IN
-router.post('/signin', validation, profilePictureController, signInController);
+router.post('/signin', 
+	validation, 
+	profilePictureController, 
+	isUserExist,
+	isPasswordMatched,
+	signInController
+);
 
 // SIGN OUT 
 router.get('/signout', (req, res) => {
-    res.status(200).send({
-        msg: "You successfully signout"
-    });
+	res.status(200).send({
+			msg: "You successfully signout"
+	});
 });
 
 
 // USER PROFILE
 router.get('/:id', profileController);
-router.put("/:id", auth, updateUserInfoController)
-
+router.put("/:id", auth, updateUserInfoController);
 
 module.exports = router;

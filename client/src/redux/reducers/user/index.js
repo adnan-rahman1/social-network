@@ -1,21 +1,25 @@
-import { USER_REGISTRATION } from "../../actions";
+import { USER_SIGNIN_SIGNUP, AUTH_USER } from "../../actions";
 
 const initialState = {
-  isAuthenticated: false,
   user: {},
 };
 
-export const r_registerUser = (state = initialState, action) => {
+export const r_user = (state = initialState, action) => {
   switch(action.type) {
-    case USER_REGISTRATION:
+    case AUTH_USER:
+      state = {
+        ...state,
+        user: action.payload
+      };
+      break;
+    case USER_SIGNIN_SIGNUP:
       state = {
         ...state,
         user: action.payload,
-      }
+      };
       break;
     default:
       break;
   }
   return state;
 }
-

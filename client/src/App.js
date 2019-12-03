@@ -1,44 +1,48 @@
 import React from 'react';
 import Router from './components/router';
-import isAuthenticated from "./r_components/user/auth.controller.";
 
+import { css } from '@emotion/core';
+import BarLoader from 'react-spinners/BarLoader';
+
+import { connect } from "react-redux";
+import { ac_userAuthentication } from "./redux/actions-creator/user";
+
+const override = css`
+    display: block;
+    margin: 150px auto;
+    border-color: red;
+`;
 
 class App extends React.Component {
   
-  constructor(props) {
-    super(props);
-    this.state = {
-      authenticate: false,
-      user: {},
-    }
+  componentDidMount = async () => {
+    await this.props.ac_userAuthentication();
   }
-  
-  setUser = (user) => {
-    this.setState({ user });
-  }
-  
-  isAuthenticate = (authenticate) => {
-    this.setState({ authenticate })
-  }
-  
-  userLoggedInOrNot = async () => {
-    console.log("Calling from the app js...");
-    const data = await isAuthenticated();
-    this.isAuthenticate(data.admin);
-    this.setUser(data.user);
+
+  loading = () => {
+    return (
+      <div className='sweet-loading'>
+        <BarLoader
+          css={override}
+          height={6}
+          width={200}
+          color={'#123abc'}
+          loading={true}
+          />
+      </div>
+    )
   }
 
   render() {
+    const { isLoading } = this.props.r_boolean;
     return (
-      <div>
-        <Router
-          {...this.state}
-          isAuthenticate={this.isAuthenticate}
-          setUser={this.setUser}
-        />
-      </div>
+      isLoading ? this.loading() : <Router />
     )
   }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  r_boolean: state.r_boolean,
+});
+
+export default connect(mapStateToProps, { ac_userAuthentication })(App);

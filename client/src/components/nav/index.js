@@ -4,9 +4,12 @@ import {
   MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse,
   MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem
 } from "mdbreact";
+
+import { connect } from "react-redux";
+import { ac_userAuthentication } from "../../redux/actions-creator/user";
   
 import { toast } from 'react-toastify';
-toast.configure()
+toast.configure();
 
 
 
@@ -28,14 +31,10 @@ class NavBar extends Component {
     console.log(history);
   }
 
-  componentDidMount = async () => {
-    // when the app start this function will call first
-    console.log("Calling from the navbar js...");
-  }
-  
   render() {
     const { pathname } = this.props.location;
-    const { firstName, lastName } = this.props.user;
+    const { isAuthenticated } = this.props.r_boolean;
+    const { firstName, lastName } = this.props.r_user.user;
 
     return (
         <MDBNavbar color="blue-gradient" dark expand="md">
@@ -49,7 +48,7 @@ class NavBar extends Component {
                 <MDBNavLink to="/">Home</MDBNavLink>
               </MDBNavItem>
               { 
-                this.props.authenticate ? 
+                isAuthenticated ? 
                 <MDBNavItem>
                   <MDBDropdown>
                     <MDBDropdownToggle nav caret>
@@ -82,4 +81,8 @@ class NavBar extends Component {
     }
   }
 
-export default withRouter(NavBar);
+const mapStateToProps = (state) => ({
+  r_user: state.r_user,
+  r_boolean: state.r_boolean,
+});
+export default connect(mapStateToProps, { ac_userAuthentication })(withRouter(NavBar))

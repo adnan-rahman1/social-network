@@ -8,17 +8,16 @@ import BarLoader from 'react-spinners/BarLoader';
 
 
 import { connect } from "react-redux";
-import { ac_notification } from "../../redux/actions-creator/notification";
-import { ac_registerUser } from "../../redux/actions-creator/user";
-import { ac_loading } from "../../redux/actions-creator/loading";
+import { SIGN_UP } from "../../redux/actions";
+import { ac_userSignInSignOut } from "../../redux/actions-creator/user";
 
-toast.configure()
+
+toast.configure();
 const override = css`
     display: block;
     margin: 150px auto;
     border-color: red;
 `;
-
 
 const onSubmitForm = async (e, props) => {
   e.preventDefault();
@@ -27,19 +26,11 @@ const onSubmitForm = async (e, props) => {
     email: e.target.email.value,
     password: e.target.password.value,
   }
-  props.ac_loading(true);
-  await props.ac_registerUser(user);
-  props.ac_loading(false);
-  props.ac_notification("");
+  await props.ac_userSignInSignOut(user, SIGN_UP);
 }
 
 const signUpForm = (props) => {
 
-  let { msg } = props.r_notification;
-
-  if (msg !== "") {
-    toast.info(msg)
-  }
   return (
     <MDBContainer className="mt-5">
       <MDBRow center>
@@ -79,8 +70,7 @@ const signUpForm = (props) => {
   )
 }
 
-
-const isLoading = () => {
+const loading = () => {
   return (
     <div className='sweet-loading'>
       <BarLoader
@@ -94,21 +84,20 @@ const isLoading = () => {
   )
 }
 
-
-const SignUp = (props) => {
+const signUp = (props) => {
+  const { isLoading, isAuthenticated } = props.r_boolean;
   
-  if (false)
-    return <Redirect to="/signin" />
+  if (isAuthenticated)
+    return <Redirect to="/" />
   
-  return(
-    props.r_loading.isLoading ? isLoading() : signUpForm(props)
+  return (
+    isLoading ? loading() : signUpForm(props)
   );  
 }
   
 const mapStateToProps = (state) => ({
-  r_registerUser: state.r_registerUser,
-  r_notification: state.r_notification,
-  r_loading: state.r_loading,
+  r_user: state.r_user,
+  r_boolean: state.r_boolean,
 });
   
-export default connect(mapStateToProps, { ac_registerUser, ac_loading, ac_notification })(SignUp);
+export default connect(mapStateToProps, { ac_userSignInSignOut })(signUp);
