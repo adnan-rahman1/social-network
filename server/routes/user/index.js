@@ -35,16 +35,9 @@ router.post('/signin',
 	signInController
 );
 
-// SIGN OUT 
-router.get('/signout', (req, res) => {
-	res.status(200).send({
-		msg: "You successfully signout"
-	});
-});
-
 
 // USER PROFILE
 router.get('/:id', profileController);
-router.put("/:id", auth, updateUserInfoController);
+router.put("/:id", updateUserInfoController);
 
 module.exports = router;

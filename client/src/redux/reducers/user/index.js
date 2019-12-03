@@ -1,4 +1,4 @@
-import { USER_SIGNIN_SIGNUP, AUTH_USER, USER_SIGNOUT } from "../../actions";
+import { USER } from "../../actions";
 
 const initialState = {
   user: {},
@@ -6,19 +6,7 @@ const initialState = {
 
 export const r_user = (state = initialState, action) => {
   switch(action.type) {
-    case AUTH_USER:
-      state = {
-        ...state,
-        user: action.payload
-      };
-      break;
-    case USER_SIGNIN_SIGNUP:
-      state = {
-        ...state,
-        user: action.payload,
-      };
-      break;
-    case USER_SIGNOUT:
+    case USER:
       state = {
         ...state,
         user: action.payload

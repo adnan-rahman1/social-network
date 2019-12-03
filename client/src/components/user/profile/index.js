@@ -1,20 +1,23 @@
 import React from 'react';
 import { MDBContainer, MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBRow } from 'mdbreact';
-import userProfile from "../../../r_components/user/profile.controller";
 
-const onSubmitForm = async (id, setUser, e) => {
+import { connect } from 'react-redux';
+import { ac_userProfileUpdate } from "../../../redux/actions-creator/user";
+
+const onSubmitForm = async (props, e) => {
   e.preventDefault();
   const [ firstName, lastName ] = e.target.username.value.split(" ");
+  const { _id } = props.r_user.user;
   const user = {
-    id,
+    _id,
     firstName,
     lastName,
     email: e.target.email.value
   }
-  const updatedUser = await userProfile.updateUserProfile(user);
-  setUser(updatedUser);
+  await props.ac_userProfileUpdate(user);
 }
-const Profile = ({user, setUser}) => {
+const profile = (props) => {
+  const { firstName, lastName, email, createdAt, updatedAt } = props.r_user.user;
   return (
     <MDBContainer className="mt-5">
       <MDBRow>
@@ -22,22 +25,23 @@ const Profile = ({user, setUser}) => {
           <MDBCard style={{ width: "22rem" }}>
             <MDBCardImage className="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" waves />
             <MDBCardBody>
-              <MDBCardTitle>{ `${user.firstName} ${user.lastName}`}</MDBCardTitle>
+              <MDBCardTitle>{ `${firstName} ${lastName}`}</MDBCardTitle>
               <MDBCardText>
-                Email: { user.email }<br/>
-                Created at: { new Date(user.createdAt).toLocaleDateString() }
+                Email: { email }<br/>
+                Created at: { new Date(createdAt).toLocaleDateString() }<br />
+                Updated at: {updatedAt ? new Date(updatedAt).toLocaleDateString() : "N/A" }
               </MDBCardText>
               <MDBBtn href="#">MDBBtn</MDBBtn>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
         <MDBCol md="6">
-          <form onSubmit={(e) => onSubmitForm(user._id, setUser, e)}>
-            <p className="h5 text-center mb-4">Edit Profile</p>
+          <form onSubmit={(e) => onSubmitForm(props, e)}>
+            <p className="h5 text-center mb-4">Update Profile</p>
             <div className="grey-text">
               <MDBInput
                 name="username"
-                label={`${user.firstName} ${user.lastName}`}
+                label="Name"
                 icon="user"
                 group
                 type="text"
@@ -47,7 +51,7 @@ const Profile = ({user, setUser}) => {
               />
               <MDBInput
                 name="email"
-                label={ user.email }
+                label="Email"
                 icon="envelope"
                 group
                 type="email"
@@ -65,5 +69,8 @@ const Profile = ({user, setUser}) => {
     </MDBContainer>
   )
 }
-
-export default Profile;
+const mapStateToProps = (state) => ({
+  r_user: state.r_user,
+});
+  
+export default connect(mapStateToProps, { ac_userProfileUpdate })(profile);

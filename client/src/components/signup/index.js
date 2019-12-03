@@ -22,13 +22,16 @@ const onSubmitForm = async (e, props) => {
 }
 
 const signUpForm = (props) => {
-
+  const { isLoading } = props.r_boolean;
   return (
     <MDBContainer className="mt-5">
       <MDBRow center>
         <MDBCol md="4">
           <form onSubmit={(e) => onSubmitForm(e, props)}>
-            <p className="h5 text-center mb-4">Sign up</p>
+            <p className="h5 text-center mb-4">
+              <span>Sign up</span>
+              <span>{ isLoading && <Loading isLoading={isLoading} /> }</span>
+            </p>
             <div className="grey-text">
               <MDBInput
                 name="name"
@@ -63,13 +66,13 @@ const signUpForm = (props) => {
 }
 
 const signUp = (props) => {
-  const { isLoading, isAuthenticated } = props.r_boolean;
+  const { isAuthenticated } = props.r_boolean;
   
   if (isAuthenticated)
     return <Redirect to="/" />
   
   return (
-    isLoading ? <Loading isLoading={isLoading} /> : signUpForm(props)
+    signUpForm(props)
   );  
 }
   

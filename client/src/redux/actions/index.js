@@ -1,7 +1,6 @@
-export const AUTH_USER = "AUTH_USER";
-export const USER_SIGNIN_SIGNUP = "USER_SIGNIN_SIGNUP";
-export const USER_SIGNOUT = "USER_SIGNOUT";
+export const USER = "USER";
 export const NOTIFICATION = "NOTIFICATION";
+export const PAGE_LOADING = "PAGE_LOADING";
 export const LOADING = "LOADING";
 export const REDIRECT = "REDIRECT";
 export const IS_AUTHENTICATED = "IS_AUTHENTICATED";

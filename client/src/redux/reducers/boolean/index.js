@@ -1,8 +1,9 @@
-import { IS_AUTHENTICATED, REDIRECT, LOADING } from "../../actions";
+import { IS_AUTHENTICATED, REDIRECT, LOADING, PAGE_LOADING } from "../../actions";
 
 const initialState = {
   isAuthenticated: false,
   isLoading: false,
+  isPageLoading: false,
   isRedirect: false,
 };
 
@@ -12,6 +13,12 @@ export const r_boolean = (state = initialState, action) => {
       state = {
         ...state,
         isAuthenticated: action.payload
+      };
+      break;
+    case PAGE_LOADING:
+      state = {
+        ...state,
+        isPageLoading: action.payload,
       };
       break;
     case LOADING:

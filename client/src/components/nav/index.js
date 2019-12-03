@@ -11,8 +11,6 @@ import { ac_userAuthentication } from "../../redux/actions-creator/user";
 import { toast } from 'react-toastify';
 toast.configure();
 
-
-
 class NavBar extends Component {
   constructor(props) {
     super(props);
@@ -27,12 +25,12 @@ class NavBar extends Component {
     this.setState({ isOpen: !this.state.isOpen });
   }
 
-  isActive = (history) => {
-    console.log(history);
+  isActive = (path, url) => {
+    return path === url && "active";
   }
 
   render() {
-    const { pathname } = this.props.location;
+    const { pathname: path } = this.props.location;
     const { isAuthenticated } = this.props.r_boolean;
     const { firstName, lastName } = this.props.r_user.user;
 
@@ -44,7 +42,7 @@ class NavBar extends Component {
           <MDBNavbarToggler onClick={this.toggleCollapse} />
           <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
             <MDBNavbarNav left>
-              <MDBNavItem active={ pathname === "/" && "active" }>
+              <MDBNavItem active={this.isActive(path, "/")}>
                 <MDBNavLink to="/">Home</MDBNavLink>
               </MDBNavItem>
               { 
@@ -66,10 +64,10 @@ class NavBar extends Component {
                 </MDBNavItem>
                   :
                 <React.Fragment>
-                  <MDBNavItem active={ pathname === "/signin" && "active" }>
+                  <MDBNavItem active={this.isActive(path, "/signin")}>
                     <MDBNavLink to="/signin">Sign In</MDBNavLink>
                   </MDBNavItem>
-                  <MDBNavItem active={ pathname === "/signup" && "active" }>
+                  <MDBNavItem active={this.isActive(path, "/signup")}>
                     <MDBNavLink to="/signup">Register</MDBNavLink>
                   </MDBNavItem>
                 </React.Fragment>

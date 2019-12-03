@@ -1,21 +1,20 @@
 import React from 'react';
 import { css } from '@emotion/core';
-import BarLoader from 'react-spinners/BarLoader';
+import PulseLoader from 'react-spinners/PulseLoader';
 
 const override = css`
-    display: block;
-    margin: 150px auto;
-    border-color: red;
+    display: inline-block;
+    margin-left: 5px;
+    _border-color: red;
 `;
 
 export default (props) => (
-  <div className='sweet-loading'>
-  <BarLoader
+  <PulseLoader
     css={override}
-    height={6}
-    width={200}
+    sizeUnit={"px"}
+    size={8}
     color={'#123abc'}
     loading={props.isLoading}
     />
-  </div>
 )
+

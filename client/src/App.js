@@ -1,17 +1,11 @@
 import React from 'react';
 import Router from './components/router';
+import Loading from "./components/loading";
 
-import { css } from '@emotion/core';
-import BarLoader from 'react-spinners/BarLoader';
 
 import { connect } from "react-redux";
 import { ac_userAuthentication } from "./redux/actions-creator/user";
 
-const override = css`
-    display: block;
-    margin: 150px auto;
-    border-color: red;
-`;
 
 class App extends React.Component {
   
@@ -19,24 +13,10 @@ class App extends React.Component {
     await this.props.ac_userAuthentication();
   }
 
-  loading = () => {
-    return (
-      <div className='sweet-loading'>
-        <BarLoader
-          css={override}
-          height={6}
-          width={200}
-          color={'#123abc'}
-          loading={true}
-          />
-      </div>
-    )
-  }
-
   render() {
-    const { isLoading } = this.props.r_boolean;
+    const { isPageLoading } = this.props.r_boolean;
     return (
-      isLoading ? this.loading() : <Router />
+      isPageLoading ? <Loading isLoading={isPageLoading} /> : <Router />
     )
   }
 }

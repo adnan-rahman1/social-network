@@ -4,30 +4,38 @@ const mongoose = require('mongoose')
 module.exports = async (req, res) => {
     try {
         const user = await User.findOne({
-            _id: req.params.id,
-        });
-
-        if (!user) res.send({
-            msg: "You don't have the permission to update this post"
-        });
-
-        const updateUser = await User.findOneAndUpdate(
-            { _id: mongoose.Types.ObjectId(req.params.id) }, 
-            { 
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                email: req.body.email,
-                updatedAt: Date.now()
-            },
-            { new: true }
-        ).select("_id firstName lastName email createdAt updatedAt")
-        res.send({
-            user: updateUser,
-            msg: "User information updated successfully"
+            email: req.body.email,
         });
         
+        if(user && req.params.id == user._id) {
+            res.status(401).send({
+                msg: "Please enter another email",
+            })
+        }
+        else if (user) {
+            res.status(401).send({
+                msg: "Email is taken"
+            });
+        }
+        else {
+            const updateUser = await User.findOneAndUpdate(
+                { _id: mongoose.Types.ObjectId(req.params.id) }, 
+                { 
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    email: req.body.email,
+                    updatedAt: Date.now()
+                },
+                { new: true }
+            ).select("_id firstName lastName email createdAt updatedAt")
+            res.status(200).send({
+                user: updateUser,
+                msg: "Profile updated successfully..."
+            });
+        }
+        
     } catch (err) {
-        res.send({
+        res.status(401).send({
             msg: "Failed to update user information"
         });
     }

@@ -11,14 +11,15 @@ module.exports = async (req, res, next) => {
 			});
 		}
 		else {
-      const { _id, firstName, lastName, password } = user;
-      req.body = {
-        ...req.body,
-        _id,
-        firstName,
-        lastName,
-        userPassword: password,
-      }
+			const { _id, firstName, lastName, password, createdAt } = user;
+			req.body = {
+				...req.body,
+				_id,
+				firstName,
+				lastName,
+				userPassword: password,
+				createdAt
+			}
 			next();
 		}
 	} catch (err) {
