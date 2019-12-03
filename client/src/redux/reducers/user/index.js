@@ -1,4 +1,4 @@
-import { USER_SIGNIN_SIGNUP, AUTH_USER } from "../../actions";
+import { USER_SIGNIN_SIGNUP, AUTH_USER, USER_SIGNOUT } from "../../actions";
 
 const initialState = {
   user: {},
@@ -16,6 +16,12 @@ export const r_user = (state = initialState, action) => {
       state = {
         ...state,
         user: action.payload,
+      };
+      break;
+    case USER_SIGNOUT:
+      state = {
+        ...state,
+        user: action.payload
       };
       break;
     default:

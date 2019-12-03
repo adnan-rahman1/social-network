@@ -38,7 +38,7 @@ router.post('/signin',
 // SIGN OUT 
 router.get('/signout', (req, res) => {
 	res.status(200).send({
-			msg: "You successfully signout"
+		msg: "You successfully signout"
 	});
 });
 

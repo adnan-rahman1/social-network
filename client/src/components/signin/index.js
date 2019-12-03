@@ -1,23 +1,17 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import Loading from "../loading";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBInput } from 'mdbreact';
 
 import { connect } from "react-redux";
-import { ac_userSignInSignOut } from "../../redux/actions-creator/user";
+import { ac_userSignInSignUp } from "../../redux/actions-creator/user";
 
-import { css } from '@emotion/core';
-import BarLoader from 'react-spinners/BarLoader';
 
 import { toast } from 'react-toastify';
 import { SIGN_IN } from '../../redux/actions';
 
 
 toast.configure()
-const override = css`
-    display: block;
-    margin: 150px auto;
-    border-color: red;
-`;
 
 
 const onSubmitForm = async (e, props) => {
@@ -26,22 +20,9 @@ const onSubmitForm = async (e, props) => {
     email: e.target.email.value,
     password: e.target.password.value,
   }
-  await props.ac_userSignInSignOut(user, SIGN_IN);
+  await props.ac_userSignInSignUp(user, SIGN_IN);
 }
 
-const loading = () => {
-  return (
-    <div className='sweet-loading'>
-      <BarLoader
-        css={override}
-        height={6}
-        width={200}
-        color={'#123abc'}
-        loading={true}
-        />
-    </div>
-  )
-}
 
 const signInForm = (props) => {
   return (
@@ -84,7 +65,7 @@ const signIn = (props) => {
     return <Redirect to="/" />
 
   return (
-    isLoading ? loading() : signInForm(props)
+    isLoading ? <Loading isLoading={isLoading} /> : signInForm(props)
   );
 }
 
@@ -92,4 +73,4 @@ const mapStateToProps = (state) => ({
   r_boolean: state.r_boolean,
 });
 
-export default connect(mapStateToProps, { ac_userSignInSignOut })(signIn);
+export default connect(mapStateToProps, { ac_userSignInSignUp })(signIn);
