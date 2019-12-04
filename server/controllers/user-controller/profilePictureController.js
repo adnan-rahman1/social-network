@@ -5,14 +5,19 @@ module.exports = async (req, res, next) => {
     const img = await upload(req, res, (err) => {
       if (err) {
         // An unknown error occurred when uploading.
-        res.send(err.message);
+        res.status(401).send({
+          msg: err.message
+        });
       }
-      // console.log(req.upload);
-      // console.log(req.file)
+      console.log("Calling from profile photo upload...");
+      console.log(req.upload);
+      console.log(req.file)
       next();
       // Everything went fine.
     });
   } catch (err) {
-    res.send(err);
+    res.status(401).send({
+      msg: "Something went wrong from profile picture upload"
+    });
   }
 };

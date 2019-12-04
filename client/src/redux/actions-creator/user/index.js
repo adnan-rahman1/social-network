@@ -69,13 +69,21 @@ export const ac_userSignOut = () => (dispatch) => {
 
 export const ac_userProfileUpdate = (formData) => async (dispatch) => {
   try {
-    const { _id, firstName, lastName, email } = formData;
+    const { _id, firstName, lastName, email, upload } = formData;
+    let f_data = new FormData();
+    f_data.append("firstName", firstName);
+    f_data.append("lastName", lastName);
+    f_data.append("email", email);
+    f_data.append("upload", upload);
+
     dispatch(ac_boolean(LOADING, true));
-    const res = await axios.put(`http://localhost:5000/user/${_id}`, {
-      firstName, lastName, email,
+    const res = await axios({
+      method: "PUT",
+      url: `http://localhost:5000/user/${_id}`, 
+      data: f_data
+      // headers: { 'Content-Type': null }
     });
-    console.log(res);
-    toast.success(res.data.msg, { autoClose: 5000, position: "bottom-right" });
+    toast.success(res.data.msg, { autoClose: 2000, position: "bottom-right" });
     if(res.status === 200){
       dispatch({
         type: USER,
@@ -85,6 +93,7 @@ export const ac_userProfileUpdate = (formData) => async (dispatch) => {
     }
     dispatch(ac_boolean(LOADING, false));
   } catch (err) {
+    console.log(err);
     toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });
     dispatch(ac_boolean(LOADING, false));
   }

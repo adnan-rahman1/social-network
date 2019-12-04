@@ -6,15 +6,11 @@ module.exports = async (req, res) => {
         const user = await User.findOne({
             email: req.body.email,
         });
-        
-        if(user && req.params.id == user._id) {
+
+
+        if (user && req.params.id != user._id) {
             res.status(401).send({
-                msg: "Please enter another email",
-            })
-        }
-        else if (user) {
-            res.status(401).send({
-                msg: "Email is taken"
+                msg: "Email is taken",
             });
         }
         else {

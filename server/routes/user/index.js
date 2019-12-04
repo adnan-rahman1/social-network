@@ -38,6 +38,6 @@ router.post('/signin',
 
 // USER PROFILE
 router.get('/:id', profileController);
-router.put("/:id", updateUserInfoController);
+router.put("/:id", profilePictureController, updateUserInfoController);
 
 module.exports = router;
