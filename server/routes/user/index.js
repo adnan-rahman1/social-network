@@ -22,14 +22,12 @@ const isPasswordMatched = require("../middleware/isPasswordMatched");
 router.post('/signup', 
 	validation,
 	signUpController,
-	isUserExist,
 	signInController,
 );
 
 // SIGN IN
 router.post('/signin', 
 	validation, 
-	profilePictureController, 
 	isUserExist,
 	isPasswordMatched,
 	signInController

@@ -20,10 +20,11 @@ module.exports = async (req, res) => {
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
                     email: req.body.email,
+                    avater: req.body.avater,
                     updatedAt: Date.now()
                 },
                 { new: true }
-            ).select("_id firstName lastName email createdAt updatedAt")
+            ).select("_id firstName lastName email createdAt updatedAt avater")
             res.status(200).send({
                 user: updateUser,
                 msg: "Profile updated successfully..."

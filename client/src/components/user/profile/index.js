@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from "react-router-dom";
 import { MDBContainer ,MDBCardHeader, MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBRow } from 'mdbreact';
 
 
@@ -11,7 +12,7 @@ class Profile extends React.Component {
     this.state = {
       name: "",
       email: "",
-      upload: null,
+      photo: null,
     }
   }
 
@@ -22,12 +23,14 @@ class Profile extends React.Component {
       email,
     })
   }
+
   inputChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
   fileChange = (e) => {
-    this.setState({ upload: e.target.files[0] })
+    this.setState({ photo: e.target.files[0] })
   }
+
   onSubmitForm = async (props, e) => {
     e.preventDefault();
     let [ firstName, lastName ] = this.state.name.split(" ");
@@ -39,25 +42,22 @@ class Profile extends React.Component {
       firstName,
       lastName,
       email: this.state.email,
-      upload: this.state.upload,
+      photo: this.state.photo,
     }
     await props.ac_userProfileUpdate(user);
-    this.setState({
-      name: "",
-      email: "",
-    })
+    this.setState({ name: "", email: "", upload: null });
   }
   
   userProfile = () => {
     const { name: form_name, email: form_email } = this.state;
-    const { firstName, lastName, email, createdAt, updatedAt } = this.props.r_user.user;
+    const { firstName, lastName, email, createdAt, updatedAt, avater } = this.props.r_user.user;
     return (
       <MDBContainer className="mt-5">
         <MDBRow center>
           <MDBCol md="6" className="mb-3 text-center">
             <MDBCard className="rounded">
               <MDBCardHeader color="blue-gradient">PROFILE INFORMATION</MDBCardHeader>
-              <MDBCardImage className="mt-3 img-thumbnail mx-auto rounded" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1.jpg" />
+              <MDBCardImage className="mt-3 img-thumbnail mx-auto rounded" src={ undefined || "https://mdbootstrap.com/img/Photos/Avatars/avatar-1.jpg"} />
               <MDBCardBody>
                 <MDBCardTitle>{`${firstName} ${lastName}`}</MDBCardTitle>
                 <MDBCardText>
@@ -101,7 +101,7 @@ class Profile extends React.Component {
                   </div>
                   <div className="custom-file">
                     <input
-                      name="upload"
+                      name="photo"
                       type="file"
                       className="custom-file-input"
                       id="inputGroupFile01"
@@ -125,13 +125,17 @@ class Profile extends React.Component {
     )
 }
   render() {
-    return (
-      this.userProfile()
-    )
+    const { isAuthenticated } = this.props.r_boolean; 
+
+    if(isAuthenticated)
+      return this.userProfile()
+    
+    return <Redirect to="/" />
   }
 }
 const mapStateToProps = (state) => ({
   r_user: state.r_user,
+  r_boolean: state.r_boolean,
 });
   
 export default connect(mapStateToProps, { ac_userProfileUpdate })(Profile);

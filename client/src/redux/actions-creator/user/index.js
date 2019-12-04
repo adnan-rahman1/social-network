@@ -4,6 +4,8 @@ import {
   LOADING, 
   IS_AUTHENTICATED, 
 } from "../../actions";
+
+import objectToFormData from 'object-to-formdata';
   
 import { ac_boolean } from "../boolean";
 import axios from 'axios';
@@ -69,20 +71,11 @@ export const ac_userSignOut = () => (dispatch) => {
 
 export const ac_userProfileUpdate = (formData) => async (dispatch) => {
   try {
-    const { _id, firstName, lastName, email, upload } = formData;
-    let f_data = new FormData();
-    f_data.append("firstName", firstName);
-    f_data.append("lastName", lastName);
-    f_data.append("email", email);
-    f_data.append("upload", upload);
+    const { _id } = formData;
+    const f_data = objectToFormData(formData);
 
     dispatch(ac_boolean(LOADING, true));
-    const res = await axios({
-      method: "PUT",
-      url: `http://localhost:5000/user/${_id}`, 
-      data: f_data
-      // headers: { 'Content-Type': null }
-    });
+    const res = await axios.put(`http://localhost:5000/user/${_id}`, f_data);
     toast.success(res.data.msg, { autoClose: 2000, position: "bottom-right" });
     if(res.status === 200){
       dispatch({

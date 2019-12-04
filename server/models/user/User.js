@@ -22,6 +22,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    avater: {
+        type: Buffer,
+        contentType: String
+    },
     createdAt: {
         type: Date,
         default: Date.now

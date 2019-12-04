@@ -31,6 +31,6 @@ const upload = multer({
         fileSize: 90000
     },
     fileFilter,
-}).single('upload');
+}).single('photo');
 
 module.exports = upload;

@@ -6,14 +6,18 @@ module.exports = async (req, res, next) => {
       if (err) {
         // An unknown error occurred when uploading.
         res.status(401).send({
-          msg: err.message
+          msg: "Failed to upload photo"
         });
+      } 
+      else {
+        // Everything went fine.
+        if(req.file){
+          req.body.avater = b.file.buffer;
+        }
+        else req.body.avater = null
+        // console.log(b);
+        next();
       }
-      console.log("Calling from profile photo upload...");
-      console.log(req.upload);
-      console.log(req.file)
-      next();
-      // Everything went fine.
     });
   } catch (err) {
     res.status(401).send({

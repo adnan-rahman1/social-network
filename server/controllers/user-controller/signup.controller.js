@@ -30,9 +30,9 @@ module.exports = async (req, res, next) => {
 
       const [ firstName, lastName ] = req.body.name.split(" ");
       const { email, password } = req.body;
-      let newUser = { firstName, lastName, email, password };
-      let createUser = await new User(newUser);
-      await createUser.save();
+      let createUser = await new User({ firstName, lastName, email, password});
+      const newUser = await createUser.save();
+      req.body = newUser;
       next();
     }
       
