@@ -23,7 +23,7 @@ const userSchema = new Schema({
         required: true,
     },
     avater: {
-        type: Buffer,
+        data: Buffer,
         contentType: String
     },
     createdAt: {

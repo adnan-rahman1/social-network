@@ -10,9 +10,9 @@ module.exports = async (req, res, next) => {
         });
       } 
       else {
-        // Everything went fine.
+        // Everything went fine
         if(req.file){
-          req.body.avater = b.file.buffer;
+          req.body.avater = req.file.buffer;
         }
         else req.body.avater = null
         // console.log(b);

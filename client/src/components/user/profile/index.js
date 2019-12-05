@@ -12,6 +12,7 @@ class Profile extends React.Component {
     this.state = {
       name: "",
       email: "",
+      fileName: "Choose photo",
       photo: null,
     }
   }
@@ -28,7 +29,8 @@ class Profile extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
   fileChange = (e) => {
-    this.setState({ photo: e.target.files[0] })
+    let name = e.target.files[0] === undefined ? "Choose photo" : e.target.files[0].name;
+    this.setState({ photo: e.target.files[0], fileName: name })
   }
 
   onSubmitForm = async (props, e) => {
@@ -45,7 +47,7 @@ class Profile extends React.Component {
       photo: this.state.photo,
     }
     await props.ac_userProfileUpdate(user);
-    this.setState({ name: "", email: "", upload: null });
+    this.setState({ name: "", email: "", photo: null });
   }
   
   userProfile = () => {
@@ -57,7 +59,7 @@ class Profile extends React.Component {
           <MDBCol md="6" className="mb-3 text-center">
             <MDBCard className="rounded">
               <MDBCardHeader color="blue-gradient">PROFILE INFORMATION</MDBCardHeader>
-              <MDBCardImage className="mt-3 img-thumbnail mx-auto rounded" src={ undefined || "https://mdbootstrap.com/img/Photos/Avatars/avatar-1.jpg"} />
+              <MDBCardImage className="w-25 mt-3 img-thumbnail mx-auto rounded" src={ avater ? `data:image/jpeg;base64,${avater}` : "https://mdbootstrap.com/img/Photos/Avatars/avatar-1.jpg"} />
               <MDBCardBody>
                 <MDBCardTitle>{`${firstName} ${lastName}`}</MDBCardTitle>
                 <MDBCardText>
@@ -102,14 +104,14 @@ class Profile extends React.Component {
                   <div className="custom-file">
                     <input
                       name="photo"
+                      onChange={this.fileChange}
                       type="file"
                       className="custom-file-input"
                       id="inputGroupFile01"
                       aria-describedby="inputGroupFileAddon01"
-                      onChange={this.fileChange}
                     />
                     <label className="custom-file-label" htmlFor="inputGroupFile01">
-                      Choose photo
+                      { this.state.fileName }
                     </label>
                   </div>
                 </div>

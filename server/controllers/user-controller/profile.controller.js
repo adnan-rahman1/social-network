@@ -9,8 +9,8 @@ module.exports = async (req, res) => {
       });
     } else {
     res.status(200).send({
-        user,
-      });
+      user
+    });
     }
   } catch (err) {
     res.status(404).send({
