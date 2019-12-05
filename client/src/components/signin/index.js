@@ -43,6 +43,7 @@ const signInForm = (props) => {
                 icon="envelope"
                 group
                 type="email"
+                autocomplete="email"
                 />
               <MDBInput
                 name="password"
@@ -50,6 +51,7 @@ const signInForm = (props) => {
                 icon="lock"
                 group
                 type="password"
+                autocomplete="password"
                 />
             </div>
             <div className="text-center">

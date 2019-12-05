@@ -12,6 +12,7 @@ module.exports = async (req, res, next) => {
 			}
 		else {
 			const { _id, firstName, lastName, password, createdAt, updatedAt, avater } = user;
+			m_avater = Buffer.from(JSON.parse(JSON.stringify(avater)).buffer.data).toString("base64");
 			req.body = {
 				...req.body,
 				_id,
@@ -20,7 +21,7 @@ module.exports = async (req, res, next) => {
 				userPassword: password,
 				createdAt,
 				updatedAt,
-				avater
+				avater: m_avater
 			}
 			next();
 		}

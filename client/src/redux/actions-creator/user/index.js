@@ -45,7 +45,6 @@ export const ac_userSignInSignUp =  (formData, urlSubStr) => async (dispatch) =>
     if (res.status === 200) {
       toast.success(`You are successfully ${msg}...`, { autoClose: 2000, position: "bottom-right" });
       localStorage.setItem("token", res.data.token);
-      console.log(res.data.user);
       dispatch({
         type: USER,
         payload: res.data.user,
@@ -86,7 +85,6 @@ export const ac_userProfileUpdate = (formData) => async (dispatch) => {
     }
     dispatch(ac_boolean(LOADING, false));
   } catch (err) {
-    console.log(err);
     toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });
     dispatch(ac_boolean(LOADING, false));
   }
