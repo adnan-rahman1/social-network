@@ -47,7 +47,7 @@ class Profile extends React.Component {
       photo: this.state.photo,
     }
     await props.ac_userProfileUpdate(user);
-    this.setState({ name: "", email: "", photo: null });
+    this.setState({ name: "", email: "", photo: null, fileName: "Choose photo" });
   }
   
   userProfile = () => {

@@ -9,8 +9,8 @@ const generateWebToken = (id) => {
 // END
 
 module.exports = (req, res) => {
-  const { _id, firstName, lastName, email, createdAt, updatedAt, avater } = req.body;
-
+  const { _id, firstName, lastName, email, createdAt, updatedAt, avater: userAvater } = req.body;
+  const avater = userAvater && userAvater.toString("base64");
   const token = generateWebToken(_id); // Generate JSON WEB TOKEN
 
   res.status(200).send({

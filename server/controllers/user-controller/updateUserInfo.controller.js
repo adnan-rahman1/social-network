@@ -15,8 +15,8 @@ module.exports = async (req, res) => {
         }
         else {
             const updateUser = await User.findOneAndUpdate(
-                { _id: mongoose.Types.ObjectId(req.params.id) }, 
-                { 
+                { _id: mongoose.Types.ObjectId(req.params.id) },
+                {
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
                     email: req.body.email,
@@ -25,12 +25,20 @@ module.exports = async (req, res) => {
                 },
                 { new: true }
             ).select("_id firstName lastName email createdAt updatedAt avater")
+            const { _id, firstName, lastName, email, createdAt, updatedAt, avater: userAvater } = updateUser;
+            avater = userAvater && userAvater.toString("base64");
+
             res.status(200).send({
-                user: updateUser,
+                user: {
+                    _id,
+                    firstName, lastName, email,
+                    avater,
+                    createdAt, updatedAt,
+                },
                 msg: "Profile updated successfully..."
             });
         }
-        
+
     } catch (err) {
         res.status(401).send({
             msg: "Failed to update user information"

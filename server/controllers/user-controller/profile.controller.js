@@ -8,9 +8,13 @@ module.exports = async (req, res) => {
         msg: "Sorry no user found"
       });
     } else {
-    res.status(200).send({
-      user
-    });
+      const { _id, firstName, lastName, email, createdAt, updatedAt, avater: userAvater } = user;
+      avater = avater && userAvater.toString("base64");
+      res.status(200).send({
+        user: {
+          _id, firstName, lastName, email, avater, createdAt, updatedAt
+        }
+      });
     }
   } catch (err) {
     res.status(404).send({

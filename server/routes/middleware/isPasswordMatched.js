@@ -1,16 +1,16 @@
 const bcryptjs = require('bcryptjs');
 
 // Compare Password with Request Password
-const checkIfPassMatch = (reqPassword, password) => {
-  return bcryptjs.compare(reqPassword, password); // return true if password matched
+const checkIfPassMatch = (plainPassword, hashPassword) => {
+  return bcryptjs.compare(plainPassword, hashPassword); // return true if password matched
 }
 // End
 
 module.exports = async (req, res, next) => {
   try {
-    const userPassword = req.body.userPassword
-    const reqPassword = req.body.password;
-    const isPasswordMatched = await checkIfPassMatch(reqPassword, userPassword);
+    const hashPassword = req.body.password
+    const plainPassword = req.body.plainPassword;
+    const isPasswordMatched = await checkIfPassMatch(plainPassword, hashPassword);
     if (!isPasswordMatched) { // Check if the password match
       res.status(403).send({
         msg: "Email and Password doesn't exist",
