@@ -11,10 +11,13 @@ module.exports = async (req, res, next) => {
       } 
       else {
         // Everything went fine
+        // console.log(Buffer.from(req.body.photo, "base64"));
         if(req.file){
           req.body.avater = req.file.buffer;
         }
-        else req.body.avater = null
+        else req.body.avater = Buffer.from(req.body.photo, "base64");
+
+        req.body.photo = undefined;
         // console.log(b);
         next();
       }

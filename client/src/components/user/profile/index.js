@@ -35,14 +35,17 @@ class Profile extends React.Component {
 
   onSubmitForm = async (props, e) => {
     e.preventDefault();
+    e.target.reset();
+    
     const { name: formName, email: formEmail, photo } = this.state;
-    const { _id, name, email } = props.r_user.user;
+    const { _id, name, email, avater } = props.r_user.user;
 
+    // console.log(Buffer.from(avater));
     const user = {
       _id,
       name: formName || name,
       email: formEmail || email,
-      photo,
+      photo: photo || avater
     }
     await props.ac_userProfileUpdate(user);
     this.setState({ photo: null, fileName: "Choose photo" });
