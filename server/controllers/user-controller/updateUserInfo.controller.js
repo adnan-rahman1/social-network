@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 module.exports = async (req, res) => {
     try {
         const user = await User.findOne({
-            email: req.body.email,
+            _id: req.body._id,
         });
 
 
@@ -17,21 +17,18 @@ module.exports = async (req, res) => {
             const updateUser = await User.findOneAndUpdate(
                 { _id: mongoose.Types.ObjectId(req.params.id) },
                 {
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    email: req.body.email,
-                    avater: req.body.avater,
+                    ...req.body,
                     updatedAt: Date.now()
                 },
                 { new: true }
-            ).select("_id firstName lastName email createdAt updatedAt avater")
-            const { _id, firstName, lastName, email, createdAt, updatedAt, avater: userAvater } = updateUser;
+            ).select("_id name email createdAt updatedAt avater")
+            const { _id, name, email, createdAt, updatedAt, avater: userAvater } = updateUser;
             avater = userAvater && userAvater.toString("base64");
 
             res.status(200).send({
                 user: {
                     _id,
-                    firstName, lastName, email,
+                    name, email,
                     avater,
                     createdAt, updatedAt,
                 },

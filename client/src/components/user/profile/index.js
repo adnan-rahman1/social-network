@@ -18,9 +18,9 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    const { firstName, lastName, email } = this.props.r_user.user;
+    const { name, email } = this.props.r_user.user;
     this.setState({
-      name: `${firstName} ${lastName}`,
+      name,
       email,
     })
   }
@@ -35,33 +35,34 @@ class Profile extends React.Component {
 
   onSubmitForm = async (props, e) => {
     e.preventDefault();
-    let [ firstName, lastName ] = this.state.name.split(" ");
-    lastName = lastName || "";
-    const { _id } = props.r_user.user;
-    e.target.reset();
+    const { name: formName, email: formEmail, photo } = this.state;
+    const { _id, name, email } = props.r_user.user;
+
     const user = {
       _id,
-      firstName,
-      lastName,
-      email: this.state.email,
-      photo: this.state.photo,
+      name: formName || name,
+      email: formEmail || email,
+      photo,
     }
     await props.ac_userProfileUpdate(user);
-    this.setState({ name: "", email: "", photo: null, fileName: "Choose photo" });
+    this.setState({ photo: null, fileName: "Choose photo" });
   }
   
   userProfile = () => {
-    const { name: form_name, email: form_email } = this.state;
-    const { firstName, lastName, email, createdAt, updatedAt, avater } = this.props.r_user.user;
+    const { name: form_Name, email: form_email } = this.state;
+    const { name, email, createdAt, updatedAt, avater } = this.props.r_user.user;
     return (
       <MDBContainer className="mt-5">
         <MDBRow center>
           <MDBCol md="6" className="mb-3 text-center">
             <MDBCard className="rounded">
               <MDBCardHeader color="blue-gradient">PROFILE INFORMATION</MDBCardHeader>
-              <MDBCardImage className="w-25 mt-3 img-thumbnail mx-auto rounded" src={ avater ? `data:image/jpeg;base64,${avater}` : "https://mdbootstrap.com/img/Photos/Avatars/avatar-1.jpg"} />
+              <MDBCardImage 
+                className="w-25 mt-3 img-thumbnail mx-auto rounded" 
+                src={ avater ? `data:image/jpeg;base64,${avater}` : "https://tinyurl.com/srnc4qu"} 
+              />
               <MDBCardBody>
-                <MDBCardTitle>{`${firstName} ${lastName}`}</MDBCardTitle>
+                <MDBCardTitle>{name}</MDBCardTitle>
                 <MDBCardText>
                   Email: { email }<br/>
                   Created at: { new Date(createdAt).toLocaleDateString() }<br />
@@ -81,9 +82,8 @@ class Profile extends React.Component {
                   icon="user"
                   group
                   type="text"
-                  value={form_name}
+                  value={form_Name}
                   onChange={this.inputChange}
-                  required
                 />
                 <MDBInput
                   name="email"
@@ -93,7 +93,6 @@ class Profile extends React.Component {
                   type="email"
                   value={form_email}
                   onChange={this.inputChange}
-                  required
                 />
                 <div className="input-group">
                   <div className="input-group-prepend">

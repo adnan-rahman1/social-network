@@ -27,10 +27,7 @@ module.exports = async (req, res, next) => {
       // Generate Encrypt Password
       req.body.password = await generateHashPassWord(req.body.password);
       // End 
-
-      const [ firstName, lastName ] = req.body.name.split(" ");
-      const { email, password } = req.body;
-      let createUser = await new User({ firstName, lastName, email, password});
+      let createUser = await new User(req.body);
       const newUser = await createUser.save();
       req.body = newUser;
       next();

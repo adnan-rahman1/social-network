@@ -9,10 +9,10 @@ module.exports = async (req, res, next) => {
 			});
 		}
 		else {
-			const { _id, firstName, lastName, email, password, avater, createdAt, updatedAt } = user;
+			const { _id, name, email, password, avater, createdAt, updatedAt } = user;
 			// m_avater = Buffer.from(JSON.parse(JSON.stringify(avater)).buffer.data).toString("base64");
 			req.body = {
-				_id, firstName, lastName, email, password, avater, createdAt, updatedAt,
+				_id, name, email, password, avater, createdAt, updatedAt,
 				plainPassword: req.body.password, // plain password
 			}
 			next();

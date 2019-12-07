@@ -32,7 +32,7 @@ class NavBar extends Component {
   render() {
     const { pathname: path } = this.props.location;
     const { isAuthenticated } = this.props.r_boolean;
-    const { firstName, lastName } = this.props.r_user.user;
+    const { name } = this.props.r_user.user;
 
     return (
         <MDBNavbar color="blue-gradient" dark expand="md">
@@ -50,7 +50,7 @@ class NavBar extends Component {
                 <MDBNavItem>
                   <MDBDropdown>
                     <MDBDropdownToggle nav caret>
-                      { `${firstName} ${lastName}` }
+                      { name }
                     </MDBDropdownToggle>
                     <MDBDropdownMenu>
                       <MDBDropdownItem>
