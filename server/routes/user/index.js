@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const auth = require('../middleware/auth');
 
-
+// PUBLIC CONTROLLER
+const getAllUserController = require("../../controllers/user-controller/getAllUserController");
 // CONTROLLERS
 const signUpController = require('../../controllers/user-controller/signup.controller');
 const signInController = require('../../controllers/user-controller/signin.controller');
@@ -35,6 +36,7 @@ router.post('/signin',
 
 
 // USER PROFILE
+router.get("/", getAllUserController);
 router.get('/:id', profileController);
 router.put("/:id", profilePictureController, updateUserInfoController);
 

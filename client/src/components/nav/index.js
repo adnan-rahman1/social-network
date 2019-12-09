@@ -46,22 +46,27 @@ class NavBar extends Component {
                 <MDBNavLink to="/">Home</MDBNavLink>
               </MDBNavItem>
               { 
-                isAuthenticated ? 
-                <MDBNavItem>
-                  <MDBDropdown>
-                    <MDBDropdownToggle nav caret>
-                      { name }
-                    </MDBDropdownToggle>
-                    <MDBDropdownMenu>
-                      <MDBDropdownItem>
-                        <MDBNavLink className="blue-text" to={`/profile/${_id}`}>Your profile</MDBNavLink>
-                      </MDBDropdownItem>
-                      <MDBDropdownItem>
-                        <MDBNavLink className='blue-text' to="/signout">Sign Out</MDBNavLink>
-                      </MDBDropdownItem>
-                    </MDBDropdownMenu>
-                  </MDBDropdown>
-                </MDBNavItem>
+                isAuthenticated ?
+                <React.Fragment>
+                  <MDBNavItem active={this.isActive(path, "/user")}>
+                    <MDBNavLink to="/user">Users</MDBNavLink>
+                  </MDBNavItem>
+                  <MDBNavItem>
+                    <MDBDropdown>
+                      <MDBDropdownToggle nav caret>
+                        { name }
+                      </MDBDropdownToggle>
+                      <MDBDropdownMenu>
+                        <MDBDropdownItem>
+                          <MDBNavLink className="blue-text" to={`/profile/${_id}`}>Your profile</MDBNavLink>
+                        </MDBDropdownItem>
+                        <MDBDropdownItem>
+                          <MDBNavLink className='blue-text' to="/signout">Sign Out</MDBNavLink>
+                        </MDBDropdownItem>
+                      </MDBDropdownMenu>
+                    </MDBDropdown>
+                  </MDBNavItem>
+                </React.Fragment>
                   :
                 <React.Fragment>
                   <MDBNavItem active={this.isActive(path, "/signin")}>

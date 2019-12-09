@@ -1,5 +1,6 @@
 import { 
   USER,
+  ALL_USER,
   PAGE_LOADING, 
   LOADING, 
   IS_AUTHENTICATED, 
@@ -87,5 +88,22 @@ export const ac_userProfileUpdate = (formData) => async (dispatch) => {
   } catch (err) {
     toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });
     dispatch(ac_boolean(LOADING, false));
+  }
+}
+
+export const ac_getAllUsers = () => async (dispatch) => {
+  try {
+    // dispatch(ac_boolean(PAGE_LOADING, true))
+    const res = await axios.get("http://localhost:5000/user/");
+    if (res.status === 200) {
+      dispatch({
+        type: ALL_USER,
+        payload: res.data.users,
+      });
+      // dispatch(ac_boolean(PAGE_LOADING, false));
+    }
+  } catch (err) {
+    // dispatch(ac_boolean(PAGE_LOADING, false));
+    // toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });
   }
 }

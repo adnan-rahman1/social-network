@@ -1,5 +1,6 @@
 import React from 'react';
 import Home from '../home';
+import User from "../user";
 import Profile from "../user/profile";
 import NavBar from "../nav";
 import SignUp from "../signup";
@@ -18,6 +19,7 @@ const Router = (props) => {
       <NavBar/>
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route path="/user" component={User} />
         <Route path={`/profile/${_id}`} component={Profile} />
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />} />
