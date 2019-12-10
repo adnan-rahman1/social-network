@@ -19,7 +19,6 @@ class User extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showUserPublicProfile: false,
     }
   }
 
@@ -30,7 +29,6 @@ class User extends React.Component {
   viewUserProfileHandler = async (id) => {
     await this.props.ac_getSingleUser(id);
     this.props.history.push(`/user/profile/${id}`);
-    this.setState({ showUserPublicProfile: true });
   }
 
   getAllUserData(user) {
@@ -69,22 +67,13 @@ class User extends React.Component {
       return <Redirect to="/" />
     }
 
-    if (this.state.showUserPublicProfile) {
-      return (
-        <div>
-          <h1>Hello world</h1>
-        </div>
-      )
-    }
-    else {
-      return (
-        <MDBContainer className="text-center">
-          <MDBRow>
-            { all_user.map(user => this.getAllUserData(user)) }
-          </MDBRow>
-        </MDBContainer>
-      )
-    }
+    return (
+      <MDBContainer className="text-center">
+        <MDBRow>
+          { all_user.map(user => this.getAllUserData(user)) }
+        </MDBRow>
+      </MDBContainer>
+    )
   }
 }
 

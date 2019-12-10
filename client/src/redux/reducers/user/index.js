@@ -11,7 +11,8 @@ export const r_user = (state = initialState, action) => {
     case USER: 
       state = {
         ...state,
-        user: action.payload // auth user
+        user: action.payload, // auth user
+        single_user: action.payload,
       };
       break;
     case ALL_USER:

@@ -31,8 +31,9 @@ class Profile extends React.Component {
   }
 
   componentDidMount = () => {
-    const { _id } = this.props.r_user.single_user
-    const { name, email } = _id === undefined ? this.props.r_user.user : this.props.r_user.single_user;
+    
+    const { name, email } = this.props.r_user.single_user;
+    
     this.setState({
       name,
       email
@@ -67,7 +68,7 @@ class Profile extends React.Component {
   };
 
   userProfile = () => {
-    const { _id } = this.props.r_user.single_user;
+
     const { name: form_Name, email: form_email } = this.state;
     const {
       name,
@@ -75,7 +76,7 @@ class Profile extends React.Component {
       createdAt,
       updatedAt,
       avater
-    } = _id === undefined ? this.props.r_user.user: this.props.r_user.single_user;
+    } = this.props.r_user.single_user;
 
     return (
       <MDBContainer className="mt-5">
@@ -182,6 +183,7 @@ class Profile extends React.Component {
     );
   };
   render() {
+
     const { isAuthenticated } = this.props.r_boolean;
 
     if (isAuthenticated) return this.userProfile();
