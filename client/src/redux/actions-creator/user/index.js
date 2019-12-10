@@ -1,5 +1,6 @@
 import { 
   USER,
+  SINGLE_USER,
   ALL_USER,
   PAGE_LOADING, 
   LOADING, 
@@ -99,6 +100,22 @@ export const ac_getAllUsers = () => async (dispatch) => {
       dispatch({
         type: ALL_USER,
         payload: res.data.users,
+      });
+      // dispatch(ac_boolean(PAGE_LOADING, false));
+    }
+  } catch (err) {
+    // dispatch(ac_boolean(PAGE_LOADING, false));
+    // toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });
+  }
+}
+export const ac_getSingleUser = (id) => async (dispatch) => {
+  try {
+    // dispatch(ac_boolean(PAGE_LOADING, true))
+    const res = await axios.get(`http://localhost:5000/user/profile/${id}`);
+    if (res.status === 200) {
+      dispatch({
+        type: SINGLE_USER,
+        payload: res.data.user,
       });
       // dispatch(ac_boolean(PAGE_LOADING, false));
     }

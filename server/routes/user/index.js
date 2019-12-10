@@ -37,7 +37,7 @@ router.post('/signin',
 
 // USER PROFILE
 router.get("/", getAllUserController);
-router.get('/:id', profileController);
+router.get('/profile/:id', profileController);
 router.put("/:id", profilePictureController, updateUserInfoController);
 
 module.exports = router;

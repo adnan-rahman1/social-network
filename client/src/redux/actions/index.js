@@ -1,4 +1,5 @@
 export const USER = "USER";
+export const SINGLE_USER = "SINGLE_USER";
 export const ALL_USER = "ALL_USER";
 export const NOTIFICATION = "NOTIFICATION";
 export const PAGE_LOADING = "PAGE_LOADING";

@@ -12,15 +12,16 @@ import { connect } from "react-redux";
 
 const Router = (props) => {
 
-  const { _id } = props.r_user.user;
+  const { _id } = props.r_user.single_user;
+  const id = _id === undefined ? props.r_user.user._id : _id;
 
   return (
     <BrowserRouter>
       <NavBar/>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/user" component={User} />
-        <Route path={`/profile/${_id}`} component={Profile} />
+        <Route exact path="/user" component={User} />
+        <Route exact path={`/user/profile/${id}`} component={Profile} />
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />} />
         <Route path="/signout" component={SignOut} />

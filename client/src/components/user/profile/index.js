@@ -14,8 +14,10 @@ import {
   MDBRow
 } from "mdbreact";
 
+
+
 import { connect } from "react-redux";
-import { ac_userProfileUpdate } from "../../../redux/actions-creator/user";
+import { ac_userProfileUpdate, ac_getSingleUser } from "../../../redux/actions-creator/user";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -28,8 +30,9 @@ class Profile extends React.Component {
     };
   }
 
-  componentDidMount() {
-    const { name, email } = this.props.r_user.user;
+  componentDidMount = () => {
+    const { _id } = this.props.r_user.single_user
+    const { name, email } = _id === undefined ? this.props.r_user.user : this.props.r_user.single_user;
     this.setState({
       name,
       email
@@ -64,7 +67,7 @@ class Profile extends React.Component {
   };
 
   userProfile = () => {
-
+    const { _id } = this.props.r_user.single_user;
     const { name: form_Name, email: form_email } = this.state;
     const {
       name,
@@ -72,7 +75,7 @@ class Profile extends React.Component {
       createdAt,
       updatedAt,
       avater
-    } = this.props.r_user.user;
+    } = _id === undefined ? this.props.r_user.user: this.props.r_user.single_user;
 
     return (
       <MDBContainer className="mt-5">
@@ -191,4 +194,4 @@ const mapStateToProps = state => ({
   r_boolean: state.r_boolean
 });
 
-export default connect(mapStateToProps, { ac_userProfileUpdate })(Profile);
+export default connect(mapStateToProps, { ac_userProfileUpdate, ac_getSingleUser })(Profile);

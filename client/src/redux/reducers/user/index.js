@@ -1,16 +1,17 @@
-import { USER, ALL_USER } from "../../actions";
+import { USER, SINGLE_USER, ALL_USER } from "../../actions";
 
 const initialState = {
-  user: {},
+  user: {}, // auth user
   all_user: [],
+  single_user: {},
 };
 
 export const r_user = (state = initialState, action) => {
   switch(action.type) {
-    case USER:
+    case USER: 
       state = {
         ...state,
-        user: action.payload
+        user: action.payload // auth user
       };
       break;
     case ALL_USER:
@@ -18,6 +19,12 @@ export const r_user = (state = initialState, action) => {
         ...state,
         all_user: action.payload,
       }
+      break;
+    case SINGLE_USER:
+      state = {
+        ...state,
+        single_user: action.payload
+      };
       break;
     default:
       break;

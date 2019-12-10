@@ -58,7 +58,7 @@ class NavBar extends Component {
                       </MDBDropdownToggle>
                       <MDBDropdownMenu>
                         <MDBDropdownItem>
-                          <MDBNavLink className="blue-text" to={`/profile/${_id}`}>Your profile</MDBNavLink>
+                          <MDBNavLink className="blue-text" to={`/user/profile/${_id}`}>Your profile</MDBNavLink>
                         </MDBDropdownItem>
                         <MDBDropdownItem>
                           <MDBNavLink className='blue-text' to="/signout">Sign Out</MDBNavLink>
