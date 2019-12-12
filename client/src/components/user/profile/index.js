@@ -11,7 +11,8 @@ import {
   MDBCardTitle,
   MDBCardText,
   MDBCol,
-  MDBRow
+  MDBRow,
+  MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter
 } from "mdbreact";
 
 
@@ -23,12 +24,12 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      call: 0,
       _id: "",
       name: "",
       email: "",
       fileName: "Choose photo",
-      photo: null
+      photo: null,
+      modal14: false
     };
   }
 
@@ -76,6 +77,13 @@ class Profile extends React.Component {
     await props.ac_userProfileUpdate(user);
     this.setState({ photo: null, fileName: "Choose photo" });
   };
+
+  toggle = nr => () => {
+    let modalNumber = 'modal' + nr
+    this.setState({
+      [modalNumber]: !this.state[modalNumber]
+    });
+  }
 
   userProfile = () => {
 
@@ -183,7 +191,7 @@ class Profile extends React.Component {
                 >
                   Update
                 </MDBBtn>
-                <MDBBtn size="sm" className="float-left" color="danger">
+                <MDBBtn size="sm" className="float-left" color="danger" onClick={this.toggle(14)}>
                   Delete
                 </MDBBtn>
               </div>
@@ -192,6 +200,16 @@ class Profile extends React.Component {
           :
           "" }
         </MDBRow>
+        <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
+          <MDBModalHeader toggle={this.toggle(14)}>Delete Account</MDBModalHeader>
+          <MDBModalBody>
+            You are about to delete your account. Are you sure you want to delete your account?
+          </MDBModalBody>
+          <MDBModalFooter>
+            <MDBBtn color="primary" onClick={this.toggle(14)}>No</MDBBtn>
+            <MDBBtn color="danger">Yes</MDBBtn>
+          </MDBModalFooter>
+        </MDBModal>
       </MDBContainer>
     );
   };

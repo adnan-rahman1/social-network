@@ -26,11 +26,8 @@ export const ac_userAuthentication =  () => async (dispatch) => {
     });
     if (res.status === 200) {
       toast.success(res.data.msg, { autoClose: 2000, position: "bottom-right" });
-      dispatch({
-        type: USER,
-        payload: res.data.user,
-      });
-      dispatch({ type: SINGLE_USER, payload: res.data.user });
+      dispatch({ ype: USER, payload: res.data.user }); // current auth user
+      dispatch({ type: SINGLE_USER, payload: res.data.user }); // default profile view user
       dispatch(ac_boolean(PAGE_LOADING, false));
       dispatch(ac_boolean(IS_AUTHENTICATED, true));
     }
@@ -64,10 +61,7 @@ export const ac_userSignInSignUp =  (formData, urlSubStr) => async (dispatch) =>
 export const ac_userSignOut = () => (dispatch) => {
   localStorage.removeItem("token");
   dispatch(ac_boolean(IS_AUTHENTICATED, false));
-  dispatch({
-    type: USER,
-    payload: "",
-  });
+  dispatch({ type: USER, payload: "" });
   toast.success("Sign out successfully", { autoClose: 2000, position: "bottom-right" });
 }
 
@@ -80,10 +74,8 @@ export const ac_userProfileUpdate = (formData) => async (dispatch) => {
     const res = await axios.put(`http://localhost:5000/user/${_id}`, f_data);
     toast.success(res.data.msg, { autoClose: 2000, position: "bottom-right" });
     if(res.status === 200){
-      dispatch({
-        type: USER,
-        payload: res.data.user,
-      });
+      dispatch({ type: USER, payload: res.data.user }); // current auth user;
+      dispatch({ type: SINGLE_USER, payload: res.data.user }); // current profile view user
       dispatch(ac_boolean(IS_AUTHENTICATED, true));
     }
     dispatch(ac_boolean(LOADING, false));
@@ -109,6 +101,7 @@ export const ac_getAllUsers = () => async (dispatch) => {
     // toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });
   }
 }
+
 export const ac_getSingleUser = (id) => async (dispatch) => {
   try {
     // dispatch(ac_boolean(PAGE_LOADING, true))
