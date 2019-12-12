@@ -23,6 +23,8 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      call: 0,
+      _id: "",
       name: "",
       email: "",
       fileName: "Choose photo",
@@ -32,12 +34,20 @@ class Profile extends React.Component {
 
   componentDidMount = () => {
     
-    const { name, email } = this.props.r_user.single_user;
+    const { _id, name, email } = this.props.r_user.user; // auth state only used for update information
     
     this.setState({
+      _id,
       name,
       email
     });
+  }
+  
+
+  static getDerivedStateFromProps = async (nextProps, prevState) => {
+    if (nextProps.match.params.id !== nextProps.r_user.single_user._id) {
+      await nextProps.ac_getSingleUser(nextProps.match.params.id);
+    }
   }
 
   inputChange = e => {
@@ -110,6 +120,7 @@ class Profile extends React.Component {
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
+          { this.props.r_user.user._id === this.props.r_user.single_user._id ? 
           <MDBCol md="6">
             <form
               method="put"
@@ -178,12 +189,13 @@ class Profile extends React.Component {
               </div>
             </form>
           </MDBCol>
+          :
+          "" }
         </MDBRow>
       </MDBContainer>
     );
   };
   render() {
-
     const { isAuthenticated } = this.props.r_boolean;
 
     if (isAuthenticated) return this.userProfile();

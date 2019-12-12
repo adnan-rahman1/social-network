@@ -21,6 +21,10 @@ class NavBar extends Component {
     
   }
   
+  componentDidMount = () => {
+    this.props.history.push(this.props.location.path);
+  }
+  
   toggleCollapse = () => {
     this.setState({ isOpen: !this.state.isOpen });
   }
@@ -58,7 +62,7 @@ class NavBar extends Component {
                       </MDBDropdownToggle>
                       <MDBDropdownMenu>
                         <MDBDropdownItem>
-                          <MDBNavLink className="blue-text" to={`/user/profile/${_id}`}>Your profile</MDBNavLink>
+                          <MDBNavLink className="blue-text" to={`/user/${_id}`}>Your profile</MDBNavLink>
                         </MDBDropdownItem>
                         <MDBDropdownItem>
                           <MDBNavLink className='blue-text' to="/signout">Sign Out</MDBNavLink>

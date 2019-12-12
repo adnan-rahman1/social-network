@@ -12,8 +12,7 @@ import { connect } from "react-redux";
 
 const Router = (props) => {
 
-  const { _id } = props.r_user.single_user;
-
+  // const { _id } = props.r_user.single_user;
 
   return (
     <BrowserRouter>
@@ -21,9 +20,10 @@ const Router = (props) => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/user" component={User} />
-        <Route exact path={`/user/profile/${_id}`} component={Profile} />
+        {/* <Route exact path="/user/profile" component={AdminProfile} /> */}
+        <Route exact path="/user/:id" component={Profile} />
         <Route path="/signup" component={SignUp} />
-        <Route path="/signin" component={SignIn} />} />
+        <Route path="/signin" component={SignIn} />
         <Route path="/signout" component={SignOut} />
       </Switch>
     </BrowserRouter>

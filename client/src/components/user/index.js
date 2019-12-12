@@ -28,7 +28,7 @@ class User extends React.Component {
 
   viewUserProfileHandler = async (id) => {
     await this.props.ac_getSingleUser(id);
-    this.props.history.push(`/user/profile/${id}`);
+    this.props.history.push(`/user/${id}`);
   }
 
   getAllUserData(user) {
@@ -70,7 +70,7 @@ class User extends React.Component {
     return (
       <MDBContainer className="text-center">
         <MDBRow>
-          { all_user.map(user => this.getAllUserData(user)) }
+          { all_user.map(user => (user._id !== this.props.r_user.user._id) ? this.getAllUserData(user) : "") }
         </MDBRow>
       </MDBContainer>
     )

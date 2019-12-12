@@ -30,6 +30,7 @@ export const ac_userAuthentication =  () => async (dispatch) => {
         type: USER,
         payload: res.data.user,
       });
+      dispatch({ type: SINGLE_USER, payload: res.data.user });
       dispatch(ac_boolean(PAGE_LOADING, false));
       dispatch(ac_boolean(IS_AUTHENTICATED, true));
     }
@@ -111,7 +112,7 @@ export const ac_getAllUsers = () => async (dispatch) => {
 export const ac_getSingleUser = (id) => async (dispatch) => {
   try {
     // dispatch(ac_boolean(PAGE_LOADING, true))
-    const res = await axios.get(`http://localhost:5000/user/profile/${id}`);
+    const res = await axios.get(`http://localhost:5000/user/${id}`);
     if (res.status === 200) {
       dispatch({
         type: SINGLE_USER,

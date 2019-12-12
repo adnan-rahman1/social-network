@@ -12,7 +12,6 @@ export const r_user = (state = initialState, action) => {
       state = {
         ...state,
         user: action.payload, // auth user
-        single_user: action.payload,
       };
       break;
     case ALL_USER:
