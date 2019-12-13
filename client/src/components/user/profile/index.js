@@ -18,7 +18,7 @@ import {
 
 
 import { connect } from "react-redux";
-import { ac_userProfileUpdate, ac_getSingleUser } from "../../../redux/actions-creator/user";
+import { ac_userProfileUpdate, ac_getSingleUser, ac_deleteUser } from "../../../redux/actions-creator/user";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -29,14 +29,14 @@ class Profile extends React.Component {
       email: "",
       fileName: "Choose photo",
       photo: null,
-      modal14: false
+      modal14: false,
+      redirect: false,
     };
   }
 
   componentDidMount = () => {
     
     const { _id, name, email } = this.props.r_user.user; // auth state only used for update information
-    
     this.setState({
       _id,
       name,
@@ -44,7 +44,6 @@ class Profile extends React.Component {
     });
   }
   
-
   static getDerivedStateFromProps = async (nextProps, prevState) => {
     if (nextProps.match.params.id !== nextProps.r_user.single_user._id) {
       await nextProps.ac_getSingleUser(nextProps.match.params.id);
@@ -78,6 +77,11 @@ class Profile extends React.Component {
     this.setState({ photo: null, fileName: "Choose photo" });
   };
 
+
+  deleteUser = async id => {
+    await this.props.ac_deleteUser(id);
+    this.setState({ redirect: true });
+  }
   toggle = nr => () => {
     let modalNumber = 'modal' + nr
     this.setState({
@@ -86,9 +90,9 @@ class Profile extends React.Component {
   }
 
   userProfile = () => {
-
     const { name: form_Name, email: form_email } = this.state;
     const {
+      _id,
       name,
       email,
       createdAt,
@@ -145,6 +149,7 @@ class Profile extends React.Component {
                   type="text"
                   value={form_Name}
                   onChange={this.inputChange}
+                  autocomplete="name"
                 />
                 <MDBInput
                   name="email"
@@ -154,6 +159,7 @@ class Profile extends React.Component {
                   type="email"
                   value={form_email}
                   onChange={this.inputChange}
+                  autocomplete="email"
                 />
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -207,7 +213,7 @@ class Profile extends React.Component {
           </MDBModalBody>
           <MDBModalFooter>
             <MDBBtn color="primary" onClick={this.toggle(14)}>No</MDBBtn>
-            <MDBBtn color="danger">Yes</MDBBtn>
+            <MDBBtn color="danger" onClick={() => this.deleteUser(_id)}>Yes</MDBBtn>
           </MDBModalFooter>
         </MDBModal>
       </MDBContainer>
@@ -215,6 +221,7 @@ class Profile extends React.Component {
   };
   render() {
     const { isAuthenticated } = this.props.r_boolean;
+    if (this.state.redirect) return <Redirect to="/signout" />
 
     if (isAuthenticated) return this.userProfile();
 
@@ -226,4 +233,4 @@ const mapStateToProps = state => ({
   r_boolean: state.r_boolean
 });
 
-export default connect(mapStateToProps, { ac_userProfileUpdate, ac_getSingleUser })(Profile);
+export default connect(mapStateToProps, { ac_userProfileUpdate, ac_getSingleUser, ac_deleteUser })(Profile);

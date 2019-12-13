@@ -39,6 +39,7 @@ const signUpForm = (props) => {
                 icon="user"
                 group
                 type="text"
+                autocomplete="name"
                 />
               <MDBInput
                 name="email"
@@ -46,6 +47,7 @@ const signUpForm = (props) => {
                 icon="envelope"
                 group
                 type="email"
+                autocomplete="email"
                 />
               <MDBInput
                 name="password"
@@ -53,6 +55,7 @@ const signUpForm = (props) => {
                 icon="lock"
                 group
                 type="password"
+                autocomplete="password"
                 />
             </div>
             <div className="text-center">

@@ -2,7 +2,7 @@ const { check, validationResult } = require("express-validator");
 
 module.exports = async (req, res, next) => {
   try {
-    if (req.body.name === "") {
+    if (req.body.name !== undefined) {
       await check("name")
         .not()
         .isEmpty()
@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
           min: 3,
           max: 20
         })
-        .withMessage("Name must be minimum two character long")
+        .withMessage("Name must be minimum three character long")
         .run(req);
     }
     await check("email")
@@ -19,17 +19,19 @@ module.exports = async (req, res, next) => {
       .isEmpty()
       .withMessage("Email is required")
       .isEmail()
-      .withMessage("Thats not an email")
+      .withMessage("Please enter a valid email")
       .run(req);
-    await check("password")
-      .not()
-      .isEmpty()
-      .withMessage("Password is required")
-      .isLength({ min: 6 })
-      .withMessage("Password must be minimum six character long")
-      .matches(/\d/)
-      .withMessage("Password must contain at least a number")
-      .run(req);
+    if (req.method !== "PUT") {
+      await check("password")
+        .not()
+        .isEmpty()
+        .withMessage("Password is required")
+        .isLength({ min: 6 })
+        .withMessage("Password must be minimum six character long")
+        .matches(/\d/)
+        .withMessage("Password must contain at least a number")
+        .run(req);
+    }
 
     const errors = await validationResult(req);
     if (!errors.isEmpty()) {
