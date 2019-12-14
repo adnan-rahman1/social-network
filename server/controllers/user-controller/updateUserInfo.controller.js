@@ -4,10 +4,10 @@ const mongoose = require("mongoose");
 module.exports = async (req, res) => {
   try {
     const user = await User.findOne({
-      _id: req.body._id
+      email: req.body.email
     });
 
-    if (user && req.params.id != user._id) {
+    if (user && user._id != req.params.id) {
       res.status(401).send({
         msg: "Email is taken"
       });

@@ -2,7 +2,11 @@ const User = require('../../models/user/User');
 
 module.exports = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select("name email avater createdAt updatedAt");
+    const user = await User.findById(req.params.id)
+      .populate("followers", "_id name")
+      .populate("following", "_id name")
+      .select("name email avater createdAt updatedAt");
+
     if (!user) {
       res.status(403).send({
         msg: "Sorry no user found"

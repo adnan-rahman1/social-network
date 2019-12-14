@@ -12,7 +12,9 @@ import {
   MDBCardText,
   MDBCol,
   MDBRow,
-  MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter
+  MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter,
+  MDBMask,
+  MDBView,
 } from "mdbreact";
 
 
@@ -108,14 +110,24 @@ class Profile extends React.Component {
               <MDBCardHeader color="blue-gradient">
                 PROFILE INFORMATION
               </MDBCardHeader>
-              <MDBCardImage
-                className="w-25 mt-3 img-thumbnail mx-auto rounded"
-                src={
-                  avater
+              <MDBView hover>
+                <MDBCardImage
+                  className="w-25 mt-3 mx-auto img-thumbnail rounded"
+                  src={
+                    avater
                     ? `data:image/jpeg;base64,${avater}`
                     : "https://tinyurl.com/srnc4qu"
-                }
-              />
+                  }
+                />
+                <MDBMask 
+                  style={{cursor:'pointer'}} 
+                  className="w-25 mt-3 mx-auto rounded flex-center" 
+                  overlay="black-strong"
+                  onClick={() => console.log("Hello world")}
+                >
+                  <p className="white-text">View Photo</p>
+                </MDBMask>
+              </MDBView>
               <MDBCardBody>
                 <MDBCardTitle>{name}</MDBCardTitle>
                 <MDBCardText>
@@ -210,6 +222,14 @@ class Profile extends React.Component {
           <MDBModalHeader toggle={this.toggle(14)}>Delete Account</MDBModalHeader>
           <MDBModalBody>
             You are about to delete your account. Are you sure you want to delete your account?
+            <MDBCardImage
+                className="mt-3 img-thumbnail mx-auto rounded"
+                src={
+                  avater
+                    ? `data:image/jpeg;base64,${avater}`
+                    : "https://tinyurl.com/srnc4qu"
+                }
+              />
           </MDBModalBody>
           <MDBModalFooter>
             <MDBBtn color="primary" onClick={this.toggle(14)}>No</MDBBtn>

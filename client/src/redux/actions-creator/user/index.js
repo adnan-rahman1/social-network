@@ -123,7 +123,7 @@ export const ac_getSingleUser = (id) => async (dispatch) => {
 export const ac_deleteUser = id => async (dispatch) => {
   try {
     // dispatch(ac_boolean(PAGE_LOADING, true))
-    const res = await axios.delete(`http://localhost:5000/user/${id}`);
+    await axios.delete(`http://localhost:5000/user/${id}`);
   } catch (err) {
     // dispatch(ac_boolean(PAGE_LOADING, false));
     toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });

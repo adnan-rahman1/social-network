@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const { ObjectId } = mongoose.Schema;
 
 const userSchema = new Schema({
   name: {
@@ -11,11 +12,6 @@ const userSchema = new Schema({
   email: {
     type: String,
     unique: true,
-    validate: {
-      validator: function(v) {
-        return v !== "";
-      }
-    },
     trim: true,
     required: true
   },
@@ -27,6 +23,14 @@ const userSchema = new Schema({
     type: Buffer,
     contentType: String
   },
+  following: [{
+    type: ObjectId,
+    ref: "User",
+  }],
+  followers: [{
+    type: ObjectId,
+    ref: "User",
+  }],
   createdAt: {
     type: Date,
     default: Date.now
