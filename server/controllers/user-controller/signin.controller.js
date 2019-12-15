@@ -9,13 +9,13 @@ const generateWebToken = (id) => {
 // END
 
 module.exports = (req, res) => {
-  const { _id, name, email, createdAt, updatedAt, avater: userAvater } = req.body;
+  const { _id, name, email, following, followers, createdAt, updatedAt, avater: userAvater } = req.body;
   const avater = userAvater && userAvater.toString("base64");
   const token = generateWebToken(_id); // Generate JSON WEB TOKEN
 
   res.status(200).send({
     user: {
-      _id, name, email, createdAt, updatedAt, avater
+      _id, name, email, following, followers, createdAt, updatedAt, avater
     },
     token
   });

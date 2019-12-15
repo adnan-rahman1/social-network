@@ -129,3 +129,18 @@ export const ac_deleteUser = id => async (dispatch) => {
     toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });
   }
 }
+
+export const ac_userFollowAndUnfollow = (followerId, followingId) => async (dispatch) => {
+  try {
+    const res = await axios.put("http://localhost:5000/user/follow", {
+      followerId,
+      followingId,
+    });
+    if (res.status === 200) {
+      dispatch({ type: USER, payload: res.data.user }); // current auth user;
+      // dispatch({ type: SINGLE_USER, payload: res.data.user }); // current profile view user
+    }
+  } catch (err) {
+    toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });
+  }
+}

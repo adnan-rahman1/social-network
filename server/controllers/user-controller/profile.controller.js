@@ -5,18 +5,18 @@ module.exports = async (req, res) => {
     const user = await User.findById(req.params.id)
       .populate("followers", "_id name")
       .populate("following", "_id name")
-      .select("name email avater createdAt updatedAt");
+      .select("name email following followers avater createdAt updatedAt");
 
     if (!user) {
       res.status(403).send({
         msg: "Sorry no user found"
       });
     } else {
-      const { _id, name, email, createdAt, updatedAt, avater: userAvater } = user;
+      const { _id, name, email, following, followers, createdAt, updatedAt, avater: userAvater } = user;
       avater = userAvater && userAvater.toString("base64");
       res.status(200).send({
         user: {
-          _id, name, email, avater, createdAt, updatedAt
+          _id, name, email, following, followers, avater, createdAt, updatedAt
         }
       });
     }

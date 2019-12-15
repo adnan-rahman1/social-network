@@ -19,11 +19,13 @@ module.exports = async (req, res) => {
           updatedAt: Date.now()
         },
         { new: true }
-      ).select("_id name email createdAt updatedAt avater");
+      ).select("_id name email following followers createdAt updatedAt avater");
       const {
         _id,
         name,
         email,
+        following,
+        followers,
         createdAt,
         updatedAt,
         avater: userAvater
@@ -35,6 +37,8 @@ module.exports = async (req, res) => {
           _id,
           name,
           email,
+          following,
+          followers,
           avater,
           createdAt,
           updatedAt

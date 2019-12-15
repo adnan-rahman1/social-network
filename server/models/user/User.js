@@ -25,10 +25,12 @@ const userSchema = new Schema({
   },
   following: [{
     type: ObjectId,
+    default: null,
     ref: "User",
   }],
   followers: [{
     type: ObjectId,
+    default: null,
     ref: "User",
   }],
   createdAt: {

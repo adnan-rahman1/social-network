@@ -32,7 +32,7 @@ class User extends React.Component {
   }
 
   getAllUserData(user) {
-    let avater = Buffer.from(user.avater.data).toString("base64");
+    let avater = user.avater && Buffer.from(user.avater.data).toString("base64");
     return (
       <MDBCol md="4" className="mt-3">
         <MDBCard className="rounded">

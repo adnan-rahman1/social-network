@@ -41,7 +41,7 @@ router.post('/signin',
 // USER PROFILE
 router.get("/", getAllUserController);
 router.get('/:id', profileController);
-router.put("/follow/:id", addFollowingController, addFollowerController);
+router.put("/follow", addFollowingController, addFollowerController);
 router.put("/:id", profilePictureController, validation, updateUserInfoController);
 router.delete("/:id", deleteUserController);
 

@@ -6,6 +6,7 @@ export const PAGE_LOADING = "PAGE_LOADING";
 export const LOADING = "LOADING";
 export const REDIRECT = "REDIRECT";
 export const IS_AUTHENTICATED = "IS_AUTHENTICATED";
+export const IS_FOLLOWING = "IS_Following";
 
 // URL SUBSTRING
 export const SIGN_UP = "signup";
