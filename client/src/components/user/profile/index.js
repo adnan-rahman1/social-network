@@ -114,6 +114,8 @@ class Profile extends React.Component {
       _id,
       name,
       email,
+      followers: su_followers,
+      following: su_followings,
       createdAt,
       updatedAt,
       avater
@@ -154,8 +156,11 @@ class Profile extends React.Component {
               <MDBCardBody>
                 <MDBCardTitle>{name}</MDBCardTitle>
                 <MDBCardText>
-                  Email: {email}
-                  <br />
+                  Email: {email}<br />
+                  <a href="#!">Follwers: {su_followers.length}</a>&emsp;
+                  <a href="#!">Following: {su_followings.length}</a>
+                </MDBCardText>
+                <MDBCardText>
                   Created at: {new Date(createdAt).toLocaleDateString()}
                   <br />
                   Updated at:{" "}

@@ -140,7 +140,7 @@ export const ac_userFollowAndUnfollow = (url, followerId, followingId) => async 
     });
     if (res.status === 200) {
       dispatch({ type: USER, payload: res.data.user }); // current auth user;
-      // dispatch({ type: SINGLE_USER, payload: res.data.user }); // current profile view user
+      dispatch({ type: SINGLE_USER, payload: res.data.single_user_data }); // current profile view user
     }
   } catch (err) {
     toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });

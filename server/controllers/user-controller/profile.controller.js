@@ -1,4 +1,5 @@
 const User = require('../../models/user/User');
+const getUser = require("../../config/convertBufferAvater");
 
 module.exports = async (req, res) => {
   try {
@@ -12,12 +13,8 @@ module.exports = async (req, res) => {
         msg: "Sorry no user found"
       });
     } else {
-      const { _id, name, email, following, followers, createdAt, updatedAt, avater: userAvater } = user;
-      avater = userAvater && userAvater.toString("base64");
       res.status(200).send({
-        user: {
-          _id, name, email, following, followers, avater, createdAt, updatedAt
-        }
+        user: getUser(user),
       });
     }
   } catch (err) {

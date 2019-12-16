@@ -1,4 +1,5 @@
 const User = require("../../models/user/User");
+const getUser = require("../../config/convertBufferAvater");
 const mongoose = require("mongoose");
 
 module.exports = async (req, res) => {
@@ -23,29 +24,9 @@ module.exports = async (req, res) => {
       .populate("following", "_id name")
       .populate("follower", "_id name")
       .select("_id name email following followers createdAt updatedAt avater");
-      const {
-        _id,
-        name,
-        email,
-        following,
-        followers,
-        createdAt,
-        updatedAt,
-        avater: userAvater
-      } = updateUser;
-      avater = userAvater && userAvater.toString("base64");
 
       res.status(200).send({
-        user: {
-          _id,
-          name,
-          email,
-          following,
-          followers,
-          avater,
-          createdAt,
-          updatedAt
-        },
+        user: getUser(updateUser),
         msg: "Profile updated successfully..."
       });
     }

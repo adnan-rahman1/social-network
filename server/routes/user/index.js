@@ -12,8 +12,8 @@ const profileController = require('../../controllers/user-controller/profile.con
 const profilePictureController = require('../../controllers/user-controller/profilePictureController')
 const updateUserInfoController = require('../../controllers/user-controller/updateUserInfo.controller');
 const deleteUserController = require("../../controllers/user-controller/deleteUserController");
-const addFollowingController = require("../../controllers/user-controller/addFollowingController");
-const addFollowerController = require("../../controllers/user-controller/addFollowerController");
+const followingController = require("../../controllers/user-controller/followingController");
+const followerController = require("../../controllers/user-controller/followerController");
 
 // VALIDATORS
 const validation = require('../../validator/user/');
@@ -41,7 +41,7 @@ router.post('/signin',
 // USER PROFILE
 router.get("/", getAllUserController);
 router.get('/:id', profileController);
-router.put("/follow", addFollowingController, addFollowerController);
+router.put("/follow", followingController, followerController);
 router.put("/:id", profilePictureController, validation, updateUserInfoController);
 router.delete("/:id", deleteUserController);
 

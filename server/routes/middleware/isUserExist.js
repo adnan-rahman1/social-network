@@ -4,7 +4,7 @@ module.exports = async (req, res, next) => {
 	try {
 		const user =await User.findOne({ email: req.body.email })
 		.populate("following", "_id name")
-    .populate("follower", "_id name");
+    .populate("followers", "_id name");
 		if (!user){
 			res.status(403).send({
 				msg: "Email and Password doesn't exist",

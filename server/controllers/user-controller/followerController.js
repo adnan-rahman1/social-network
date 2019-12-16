@@ -1,4 +1,5 @@
 const User = require('../../models/user/User');
+const getUser = require("../../config/convertBufferAvater");
 
 module.exports = async (req, res, next) => {
   try {
@@ -11,12 +12,9 @@ module.exports = async (req, res, next) => {
     .populate("follower", "_id name")
     .select("_id name email avater followers following");
 
-    const { _id, name, email, following, followers, createdAt, updatedAt, avater: userAvater } = user;
-    avater = userAvater && userAvater.toString("base64");
     res.status(200).send({
-      user: {
-        _id, name, email, following, followers, avater, createdAt, updatedAt
-      }
+      user: getUser(user),
+      single_user_data: req.body.single_user_data,
     });
   } catch (err) {
     res.status(500).send({
