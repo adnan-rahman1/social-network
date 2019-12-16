@@ -19,7 +19,10 @@ module.exports = async (req, res) => {
           updatedAt: Date.now()
         },
         { new: true }
-      ).select("_id name email following followers createdAt updatedAt avater");
+      )
+      .populate("following", "_id name")
+      .populate("follower", "_id name")
+      .select("_id name email following followers createdAt updatedAt avater");
       const {
         _id,
         name,

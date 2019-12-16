@@ -4,7 +4,7 @@ module.exports = async (req, res, next) => {
   try {
     const user = await User.findByIdAndUpdate(
       req.body.followerId,
-      { $push: { following: req.body.followingId }},
+      { [req.body.queryStr]: { following: req.body.followingId }},
       { new: true },
     )
     .populate("following", "_id name")

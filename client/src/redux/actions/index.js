@@ -11,3 +11,5 @@ export const IS_FOLLOWING = "IS_Following";
 // URL SUBSTRING
 export const SIGN_UP = "signup";
 export const SIGN_IN = "signin";
+export const FOLLOW = "follow";
+export const UNFOLLOW = "unfollow";

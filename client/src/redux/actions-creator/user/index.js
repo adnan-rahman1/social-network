@@ -130,11 +130,13 @@ export const ac_deleteUser = id => async (dispatch) => {
   }
 }
 
-export const ac_userFollowAndUnfollow = (followerId, followingId) => async (dispatch) => {
+export const ac_userFollowAndUnfollow = (url, followerId, followingId) => async (dispatch) => {
   try {
-    const res = await axios.put("http://localhost:5000/user/follow", {
+    let queryStr = url === "follow" ? "$push" : "$pull";
+    const res = await axios.put('http://localhost:5000/user/follow', {
       followerId,
       followingId,
+      queryStr,
     });
     if (res.status === 200) {
       dispatch({ type: USER, payload: res.data.user }); // current auth user;
