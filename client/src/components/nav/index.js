@@ -55,6 +55,9 @@ class NavBar extends Component {
                   <MDBNavItem active={this.isActive(path, "/user")}>
                     <MDBNavLink to="/user">Users</MDBNavLink>
                   </MDBNavItem>
+                  <MDBNavItem active={this.isActive(path, "/post")}>
+                    <MDBNavLink to="/post">Posts</MDBNavLink>
+                  </MDBNavItem>
                   <MDBNavItem>
                     <MDBDropdown>
                       <MDBDropdownToggle nav caret>

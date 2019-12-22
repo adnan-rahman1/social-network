@@ -1,6 +1,7 @@
 import React from 'react';
 import Home from '../home';
 import User from "../user";
+import Post from "../post";
 import Profile from "../user/profile";
 import NavBar from "../nav";
 import SignUp from "../signup";
@@ -20,6 +21,7 @@ const Router = (props) => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/user" component={User} />
+        <Route exact path="/post" component={Post} />
         {/* <Route exact path="/user/profile" component={AdminProfile} /> */}
         <Route exact path="/user/:id" component={Profile} />
         <Route path="/signup" component={SignUp} />

@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
+import Loading from "../../loading";
 import {
   MDBContainer,
   MDBCardHeader,
@@ -157,8 +158,8 @@ class Profile extends React.Component {
                 <MDBCardTitle>{name}</MDBCardTitle>
                 <MDBCardText>
                   Email: {email}<br />
-                  <a href="#!">Follwers: {su_followers.length}</a>&emsp;
-                  <a href="#!">Following: {su_followings.length}</a>
+                  <a href="#!">Follwers: {su_followers ? su_followers.length : <Loading isLoading={true} />}</a>&emsp;
+                  <a href="#!">Following: {su_followings ? su_followings.length : <Loading isLoading={true} />}</a>
                 </MDBCardText>
                 <MDBCardText>
                   Created at: {new Date(createdAt).toLocaleDateString()}
@@ -319,10 +320,12 @@ class Profile extends React.Component {
   render() {
     const { isAuthenticated } = this.props.r_boolean;
     if (this.state.redirect) return <Redirect to="/signout" />;
+    
+    if (!isAuthenticated) {
+      return <Redirect to="/" />;
+    }
+    return this.userProfile();
 
-    if (isAuthenticated) return this.userProfile();
-
-    return <Redirect to="/" />;
   }
 }
 const mapStateToProps = state => ({
