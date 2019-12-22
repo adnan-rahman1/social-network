@@ -88,8 +88,12 @@ export const ac_userProfileUpdate = (formData) => async (dispatch) => {
 
 export const ac_getAllUsers = () => async (dispatch) => {
   try {
+    const token = localStorage.getItem('token');
     // dispatch(ac_boolean(PAGE_LOADING, true))
-    const res = await axios.get("http://localhost:5000/user/");
+    const res = await axios.get(
+      "http://localhost:5000/user/",
+      { headers: { 'Authorization' : `Bearer ${token}` } }
+    );
     if (res.status === 200) {
       dispatch({
         type: ALL_USER,
@@ -105,8 +109,12 @@ export const ac_getAllUsers = () => async (dispatch) => {
 
 export const ac_getSingleUser = (id) => async (dispatch) => {
   try {
+    const token = localStorage.getItem('token');
     // dispatch(ac_boolean(PAGE_LOADING, true))
-    const res = await axios.get(`http://localhost:5000/user/${id}`);
+    const res = await axios.get(
+      `http://localhost:5000/user/${id}`, 
+      { headers: { 'Authorization' : `Bearer ${token}` } } 
+    );
     if (res.status === 200) {
       dispatch({
         type: SINGLE_USER,

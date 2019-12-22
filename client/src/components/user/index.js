@@ -64,7 +64,7 @@ class User extends React.Component {
     const { all_user } = this.props.r_user;
 
     if (!this.props.r_boolean.isAuthenticated) {
-      return <Redirect to="/" />
+      return <Redirect to="/signin" />
     }
 
     return (

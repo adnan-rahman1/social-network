@@ -35,15 +35,16 @@ router.post(
 );
 
 // USER PROFILE
-router.get("/", getAllUserController);
-router.get("/:id", profileController);
-router.put("/follow", followingController, followerController);
+router.get("/", auth, getAllUserController);
+router.get("/:id", auth, profileController);
+router.put("/follow", auth, followingController, followerController);
 router.put(
   "/:id",
+  auth,
   profilePictureController,
   validation,
   updateUserInfoController
 );
-router.delete("/:id", deleteUserController);
+router.delete("/:id", auth, deleteUserController);
 
 module.exports = router;

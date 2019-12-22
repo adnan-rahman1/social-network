@@ -59,6 +59,7 @@ class Profile extends React.Component {
     });
   };
 
+  // track if the user id is changed in the url
   static getDerivedStateFromProps = async (nextProps, prevState) => {
     if (nextProps.match.params.id !== nextProps.r_user.single_user._id) {
       await nextProps.ac_getSingleUser(nextProps.match.params.id);
@@ -69,12 +70,14 @@ class Profile extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  // used only for photo upload
   fileChange = e => {
     let name =
       e.target.files[0] === undefined ? "Choose photo" : e.target.files[0].name;
     this.setState({ photo: e.target.files[0], fileName: name });
   };
 
+  // when user click on update button this code will execute
   onSubmitForm = async (props, e) => {
     e.preventDefault();
     e.target.reset();
@@ -97,6 +100,7 @@ class Profile extends React.Component {
     await this.props.ac_userFollowAndUnfollow(url, followerId, followingId);
   };
 
+  // This code will execute when delete button is clicked
   deleteUser = async id => {
     await this.props.ac_deleteUser(id);
     this.setState({ redirect: true });
@@ -116,7 +120,7 @@ class Profile extends React.Component {
       name,
       email,
       followers: su_followers,
-      following: su_followings,
+      following: su_following,
       createdAt,
       updatedAt,
       avater
@@ -159,7 +163,7 @@ class Profile extends React.Component {
                 <MDBCardText>
                   Email: {email}<br />
                   <a href="#!">Follwers: {su_followers ? su_followers.length : <Loading isLoading={true} />}</a>&emsp;
-                  <a href="#!">Following: {su_followings ? su_followings.length : <Loading isLoading={true} />}</a>
+                  <a href="#!">Following: {su_following ? su_following.length : <Loading isLoading={true} />}</a>
                 </MDBCardText>
                 <MDBCardText>
                   Created at: {new Date(createdAt).toLocaleDateString()}
@@ -322,7 +326,7 @@ class Profile extends React.Component {
     if (this.state.redirect) return <Redirect to="/signout" />;
     
     if (!isAuthenticated) {
-      return <Redirect to="/" />;
+      return <Redirect to="/signin" />;
     }
     return this.userProfile();
 
