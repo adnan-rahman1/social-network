@@ -22,6 +22,7 @@ class NavBar extends Component {
   }
   
   componentDidMount = () => {
+    // console.log("IS Authenticated: " , this.props.r_boolean.isAuthenticated);
     this.props.history.push(this.props.location.path);
   }
   

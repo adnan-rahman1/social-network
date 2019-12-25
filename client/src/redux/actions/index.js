@@ -11,6 +11,7 @@ export const IS_FOLLOWING = "IS_Following";
 
 
 // POST RELATED ACTION
+export const POST = "POST";
 export const POSTS = "POSTS";
 
 // URL SUBSTRING

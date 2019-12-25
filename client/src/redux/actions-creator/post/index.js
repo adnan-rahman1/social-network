@@ -20,14 +20,31 @@ export const ac_createPost =  (formData) => async (dispatch) => {
     );
     if (res.status === 200) {
       toast.success(`A post is published successfully...`, { autoClose: 2000, position: "bottom-right" });
-      dispatch({
-        type: POSTS,
-        payload: res.data.posts,
-      });
       dispatch(ac_boolean(LOADING, false));
     }
   } catch (err) {
     toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });
     dispatch(ac_boolean(LOADING, false));
+  }
+}
+
+export const ac_getAllPost = () => async (dispatch) => {
+  try {
+    const token = localStorage.getItem('token');
+    // dispatch(ac_boolean(PAGE_LOADING, true))
+    const res = await axios.get(
+      "http://localhost:5000/post/",
+      { headers: { 'Authorization' : `Bearer ${token}` } }
+    );
+    if (res.status === 200) {
+      dispatch({
+        type: POSTS,
+        payload: res.data.posts,
+      });
+      // dispatch(ac_boolean(PAGE_LOADING, false));
+    }
+  } catch (err) {
+    // dispatch(ac_boolean(PAGE_LOADING, false));
+    // toast.info(err.response.data.msg, { autoClose: 2000, position: "bottom-right" });
   }
 }

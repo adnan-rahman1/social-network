@@ -17,7 +17,7 @@ toast.configure();
 
 export const ac_userAuthentication =  () => async (dispatch) => {
   try {
-    dispatch(ac_boolean(PAGE_LOADING, true))
+    // dispatch(ac_boolean(PAGE_LOADING, true))
     const token = localStorage.getItem('token');
     const res = await axios({
       method: "GET",
@@ -28,8 +28,8 @@ export const ac_userAuthentication =  () => async (dispatch) => {
       toast.success(res.data.msg, { autoClose: 2000, position: "bottom-right" });
       dispatch({ type: USER, payload: res.data.user }); // current auth user
       dispatch({ type: SINGLE_USER, payload: res.data.user }); // default profile view user
-      dispatch(ac_boolean(PAGE_LOADING, false));
       dispatch(ac_boolean(IS_AUTHENTICATED, true));
+      dispatch(ac_boolean(PAGE_LOADING, false));
     }
   } catch (err) {
     dispatch(ac_boolean(PAGE_LOADING, false));

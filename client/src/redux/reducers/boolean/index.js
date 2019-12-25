@@ -3,7 +3,7 @@ import { IS_AUTHENTICATED, REDIRECT, LOADING, PAGE_LOADING } from "../../actions
 const initialState = {
   isAuthenticated: false,
   isLoading: false,
-  isPageLoading: false,
+  isPageLoading: true,
   isRedirect: false,
 };
 

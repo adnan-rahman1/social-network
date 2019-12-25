@@ -23,7 +23,7 @@ const auth = require('../middleware/auth');
 
 
 // Public Route
-router.get("/", auth, getAllPostController);
+router.get("/", getAllPostController);
 router.get("/:id", auth, getSinglePostController);
 
 // Private Route
