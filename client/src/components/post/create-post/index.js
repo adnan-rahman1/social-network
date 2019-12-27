@@ -96,7 +96,7 @@ class CreatePost extends React.Component {
   };
   render() {
     const { isAuthenticated } = this.props.r_boolean;
-    if (this.state.redirect) return <Redirect to="/signout" />;
+    // if (this.state.redirect) return <Redirect to="/signout" />;
     
     if (!isAuthenticated) {
       return <Redirect to="/signin" />;
